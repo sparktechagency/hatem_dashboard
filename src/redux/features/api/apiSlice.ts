@@ -4,7 +4,8 @@ import { getToken } from "../../../helper/SessionHelper.ts";
 import { ErrorToast } from "../../../helper/ValidationHelper.ts";
 import TagTypes from "@/constant/tagType.constant.ts";
 
-export const baseUrl = "https://paulina-e-learning-platform.vercel.app/api/v1"
+
+const baseUrl = import.meta.env.VITE_API_URL;
 
 
 const baseQuery = fetchBaseQuery({
