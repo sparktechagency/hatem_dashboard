@@ -1,3 +1,4 @@
+import type { TProfile } from "@/types/user.type";
 
 
 class SessionHelper {
@@ -27,6 +28,18 @@ class SessionHelper {
 
   getEmail() {
     return localStorage.getItem("email");
+  }
+
+  setUserDetails(details: TProfile) {
+    localStorage.setItem("userDetails", JSON.stringify(details));
+  }
+
+  getUserDetails(): TProfile | null{
+    if (typeof window !== "undefined" && window.localStorage) {
+      const data = localStorage.getItem("userDetails");
+      return data ? JSON.parse(data) : null;
+    }
+    return null
   }
 
   setOtpToken(otpToken: string) {
@@ -67,10 +80,12 @@ class SessionHelper {
     localStorage.clear();
     window.location.href = "/auth/signin";
   }
+
+
 }
 
 
 
 
 
-export const { setToken, getToken, setEmail, getEmail, setVerifyEmail, getVerifyEmail, setOtp, getOtp, logout, isLoggedIn, setAuthId, getAuthId, setOtpToken, getOtpToken } = new SessionHelper();
+export const { setToken, getToken, setUserDetails, getUserDetails, setEmail, getEmail, setVerifyEmail, getVerifyEmail, setOtp, getOtp, logout, isLoggedIn, setAuthId, getAuthId, setOtpToken, getOtpToken } = new SessionHelper();

@@ -5,7 +5,7 @@ import type { z } from "zod";
 import type { TProfile } from "../../types/user.type";
 import { updateAdminSchema } from "@/schema/admin.schema";
 import CustomIconInput from "../form/CustomIconInput";
-import { Mail, PhoneCall, User } from "lucide-react";
+import { Mail, User } from "lucide-react";
 import FormButton from "../form/FormButton";
 
 
@@ -20,9 +20,8 @@ const ProfileForm = ({ user, file }: TProps) => {
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(updateAdminSchema),
     defaultValues: {
-      fullName: user?.fullName || "",
+      fullName: user?.name || "",
       email: user?.email || "",
-      phone: user?.phone || ""
     }
   });
 
@@ -31,7 +30,6 @@ const ProfileForm = ({ user, file }: TProps) => {
     //changePassword(data);
     const formData = new FormData();
     formData.append("fullName", data.fullName);
-    formData.append("phone", data.phone);
 
     if (file !== null) {
       formData.append("file", file);
@@ -52,14 +50,14 @@ const ProfileForm = ({ user, file }: TProps) => {
           icon={User}
         />
         <CustomIconInput control={control} name="email" label="Email Address" placeholder="Enter your email" icon={Mail} disabled/>
-        <CustomIconInput
+        {/* <CustomIconInput
           label="Phone Number"
           name="phone"
           type="text"
           control={control}
           placeholder="e.g., +44 20 1234 5678 or 020 1234 5678"
           icon={PhoneCall}
-        />
+        /> */}
        <FormButton isLoading={isLoading}>Save Changes</FormButton>
       </form>
     </>

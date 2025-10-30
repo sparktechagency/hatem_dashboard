@@ -7,10 +7,9 @@ import { useState } from "react";
 const ProfilePage = () => {
   const [file, setFile] = useState<File | null>(null)
   const user = {
-    "fullName": "Admin Admin",
+    "name": "Admin Admin",
     "email": "admin@gmail.com",
-    "phone": "01793837035",
-    "profileImg": ""
+    "image": ""
   }
 
   return (

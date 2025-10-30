@@ -54,7 +54,7 @@ const MenuItem: React.FC<SidebarNavItemProps> = ({ item, level = 0, setSidebarOp
               variant="ghost"
               onClick={() => handleNavigate(child?.href as string)}
               className={cn(
-                "w-full justify-start gap-3 ml-6 text-sm px-3 py-2.5 h-auto font-normal text-gray-700 hover:text-foreground hover:bg-accent transition-colors ",
+                "w-60 justify-start gap-3 ml-6 text-sm px-3 py-2.5 h-auto font-normal text-gray-700 hover:text-foreground hover:bg-accent transition-colors ",
                 level > 0 && "ml-6 text-sm", child.href === pathname ? "bg-indigo-50 border-r-2 border-l-2 border-indigo-500 text-indigo-700" : ""
               )}
             >

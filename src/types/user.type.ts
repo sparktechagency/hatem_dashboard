@@ -11,10 +11,9 @@ export type IUser = {
 
 
 export type TProfile = {
-  fullName: string;
+  name: string;
   email: string;
-  phone: string;
-  profileImg: string;
+  image: string;
 }
 
 export type IUserDataSource = {

@@ -20,15 +20,11 @@ import ChangePasswordPage from "@/pages/settings/ChangePasswordPage";
 import PrivacyPage from "@/pages/settings/PrivacyPage";
 import ProfilePage from "@/pages/settings/ProfilePage";
 import TermsPage from "@/pages/settings/TermsPage";
-import CertificateIssuedPage from "@/pages/test/CertificateIssuedPage";
-import CertificateTemplatePage from "@/pages/test/CertificateTemplatePage";
-import CreateTestPage from "@/pages/test/CreateTestPage";
-import TestBuilderPage from "@/pages/test/TestBuilderPage";
-import TestResultsPage from "@/pages/test/TestResultsPage";
-import UpdateTestPage from "@/pages/test/UpdateTestPage";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
+import CarBrandPage from "@/pages/CardBrand/CarBrandPage";
+import CreateBrandPage from "@/pages/CardBrand/CreateBrandPage";
 
 
 const router = createBrowserRouter([
@@ -69,6 +65,14 @@ const router = createBrowserRouter([
         element: <CategoryPage />,
       },
       {
+        path: "car-brands",
+        element: <CarBrandPage />,
+      },
+      {
+        path: "add-brand",
+        element: <CreateBrandPage />,
+      },
+      {
         path: "profile",
         element: <ProfilePage />,
       },
@@ -91,30 +95,6 @@ const router = createBrowserRouter([
       {
         path: "faqs",
         element: <FaqsPage />,
-      },
-      {
-        path: "test-builder",
-        element: <TestBuilderPage />,
-      },
-      {
-        path: "test-results",
-        element: <TestResultsPage />,
-      },
-      {
-        path: "add-test",
-        element: <CreateTestPage />,
-      },
-      {
-        path: "update-test/:id",
-        element: <UpdateTestPage />,
-      },
-      {
-        path: "certificate-template",
-        element: <CertificateTemplatePage />,
-      },
-      {
-        path: "certificate-issued",
-        element: <CertificateIssuedPage />,
       },
       {
         path: "contacts",
