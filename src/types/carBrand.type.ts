@@ -20,3 +20,10 @@ export interface IModel {
   modelName: string
   generations: IGeneration[]
 }
+
+
+
+export type IBrand = {
+  _id: string;
+  name: string;
+}

@@ -25,6 +25,8 @@ import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import CarBrandPage from "@/pages/CardBrand/CarBrandPage";
 import CreateBrandPage from "@/pages/CardBrand/CreateBrandPage";
+import ProductsPage from "@/pages/product/ProductsPage";
+import CreateProductPage from "@/pages/product/CreateProductPage";
 
 
 const router = createBrowserRouter([
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "add-brand",
         element: <CreateBrandPage />,
+      },
+      {
+        path: "products",
+        element: <ProductsPage />,
+      },
+      {
+        path: "add-product",
+        element: <CreateProductPage />,
       },
       {
         path: "profile",

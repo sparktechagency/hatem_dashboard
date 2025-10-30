@@ -5,6 +5,7 @@ import categorySliceReducer from "../features/category/categorySlice";
 import adminSliceReducer from "../features/admin/adminSlice";
 import userSliceReducer from "../features/user/userSlice";
 import faqSliceReducer from "../features/faq/faqSlice";
+import brandSliceReducer from "../features/brand/brandSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     category: categorySliceReducer,
     admin: adminSliceReducer,
     user: userSliceReducer,
-    faq: faqSliceReducer
+    faq: faqSliceReducer,
+    brand: brandSliceReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

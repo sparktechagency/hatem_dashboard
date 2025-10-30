@@ -8,6 +8,17 @@ class ValidationHelper {
     ErrorToast(msg:string){
         toast.error(msg);
     }
+
+    WarningToast(msg: string) {
+        toast(msg, {
+            style: {
+                background: '#FFFBEB',
+                color: '#D97706',
+                border: '1px solid #FBBF24',
+            },
+            icon: '⚠️',
+        });
+    };
 }
 
-export const { SuccessToast, ErrorToast } = new ValidationHelper();
+export const { SuccessToast, ErrorToast, WarningToast } = new ValidationHelper();

@@ -25,7 +25,9 @@ const TagTypes = {
     privacy: "Privacy",
     terms: "Terms",
     about: "About",
-    help: "Help"
+    help: "Help",
+    brands: "Brands",
+    brandDropDown: "BrandDropDown"
 }
 
 export default TagTypes;

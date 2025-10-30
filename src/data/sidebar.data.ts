@@ -9,6 +9,7 @@ export const menuItems: IMenuItem[] = [
   { name: 'Users', icon: Users, href: '/users' },
   { name: 'Category', icon: ChartBarStacked , href: '/categories' },
   { name: 'Car Brands', icon: SiBrandfolder , href: '/car-brands' },
+  { name: 'Products', icon: SiBrandfolder , href: '/products' },
   { name: 'Contact List', icon: MdContactPhone , href: '/contacts' },
   { name: 'Subscriber List', icon: MailCheck , href: '/subscribers' },
   {

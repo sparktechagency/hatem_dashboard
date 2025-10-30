@@ -1,19 +1,23 @@
 import type { IEngine, IGeneration, IModel } from "@/types/carBrand.type"
 import React, { useState } from "react";
+import UploadSingleImage from "../form/UploadSingleImage";
 
 interface FormData {
   models: IModel[];
 }
 
-interface DynamicFormProps {
+interface TProps {
   brandName: string;
   setBrandName: React.Dispatch<React.SetStateAction<string>>;
+  selectedFile: File | null,
+  setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>
   data: FormData;
   setData: (data: FormData) => void
-  onSubmit: (e: React.FormEvent) => void
+  onSubmit: (e: React.FormEvent) => void;
+  isLoading: boolean
 }
 
-const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : DynamicFormProps) => {
+const CreateBrandForm = ( { brandName, setBrandName, selectedFile, setSelectedFile, data, setData, onSubmit, isLoading } : TProps) => {
 
   const isEngineComplete = (engine: IEngine) => {
     return (
@@ -163,17 +167,7 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
   }
 
   const [expandedModel, setExpandedModel] = useState(0)
-  const [expandedGeneration, setExpandedGeneration] = useState<Record<string, boolean>>({})
-
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   if (isFormValid()) {
-  //     //console.log("Form submitted:", JSON.stringify(data, null, 2))
-  //     console.log(data)
-  //     alert("Form submitted successfully!")
-  //   }
-  // }
+  const [expandedGeneration, setExpandedGeneration] = useState<Record<string, boolean>>({});
 
   return (
     <div className="min-h-[60vh] bg-gradient-to-br from-slate-50 to-slate-100 p-8">
@@ -190,6 +184,7 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
               placeholder="Enter brand name"
             />
           </div>
+          <UploadSingleImage selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
 
           {/* Models */}
           {data.models.map((model, modelIndex) => (
@@ -389,6 +384,9 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
                                           onChange={(e) =>
                                             handleInputChange(modelIndex, genIndex, engineIndex, "kw", e.target.value)
                                           }
+                                          onInput={(e: any) => {
+                                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                                          }}
                                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-sm"
                                           placeholder="e.g., 110"
                                         />
@@ -401,6 +399,9 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
                                           onChange={(e) =>
                                             handleInputChange(modelIndex, genIndex, engineIndex, "hp", e.target.value)
                                           }
+                                          onInput={(e: any) => {
+                                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                                          }}
                                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-sm"
                                           placeholder="e.g., 150"
                                         />
@@ -413,6 +414,9 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
                                           onChange={(e) =>
                                             handleInputChange(modelIndex, genIndex, engineIndex, "ccm", e.target.value)
                                           }
+                                          onInput={(e: any) => {
+                                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                                          }}
                                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-sm"
                                           placeholder="e.g., 1600"
                                         />
@@ -498,14 +502,14 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
           <div className="flex gap-4 pt-6">
             <button
               type="submit"
-              disabled={!isFormValid()}
-              className={`flex-1 px-6 py-3 rounded-lg transition-colors font-semibold ${
+              disabled={!isFormValid() || isLoading}
+              className={`flex-1 px-6 py-3 rounded-lg transition-colors disabled:cursor-not-allowed font-semibold ${
                 isFormValid()
                   ? "bg-slate-900 text-white hover:bg-slate-800 cursor-pointer"
                   : "bg-slate-300 text-slate-500 cursor-not-allowed opacity-50"
               }`}
             >
-              Submit Form
+              {isLoading ? "Processing...": "Submit Form"}
             </button>
           </div>
         </form>
@@ -514,4 +518,4 @@ const DynamicForm = ( { brandName, setBrandName, data, setData, onSubmit } : Dyn
   )
 }
 
-export default DynamicForm
+export default CreateBrandForm
