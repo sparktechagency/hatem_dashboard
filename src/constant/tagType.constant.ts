@@ -27,7 +27,7 @@ const TagTypes = {
     about: "About",
     help: "Help",
     brands: "Brands",
-    brandDropDown: "BrandDropDown"
+    brandDropDown: "BrandDropDown",
 }
 
 export default TagTypes;

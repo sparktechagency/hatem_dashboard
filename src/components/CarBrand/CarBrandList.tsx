@@ -4,6 +4,7 @@ import TableOverlayLoading from "../loader/TableOverlayLoading";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { useGetBrandsQuery } from "@/redux/features/brand/brandApi";
+import ListHeader from "../common/ListHeader";
 
 const CarBrandTable = lazy(() => import("./CarBrandTable"));
 
@@ -32,24 +33,14 @@ const CarBrandList = () => {
 
   return (
     <div className="w-full mx-auto relative">
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div className="flex justify-between items-center gap-3 w-full sm:w-auto">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Car Brand List</h1>
-          <div className="flex items-center">
-            <span className="text-sm sm:text-base text-gray-600">Total:</span>
-            <span className="ml-2 px-3 py-1 bg-blue-100 text-blue-800 font-semibold rounded-full text-sm">
-              {brands?.length || 0}
-            </span>
-          </div>
-        </div>
+      {/* Header part */}
+      <ListHeader title="Car Brand List" total={brands?.length}>
+        <Button onClick={() => navigate("/add-brand")} className="bg-cyan-600 w-full sm:w-auto hover:bg-cyan-700 text-white">
+          Add Brand
+        </Button>
+      </ListHeader>
 
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-          <Button onClick={() => navigate("/add-brand")} className="bg-cyan-600 w-full sm:w-auto hover:bg-cyan-700 text-white">
-            Add Brand
-          </Button>
-        </div>
-      </div>
+      {/* table part */}
       <div className="relative h-[700px] overflow-y-auto">
         {content}
         {!isLoading && isFetching && <TableOverlayLoading />}

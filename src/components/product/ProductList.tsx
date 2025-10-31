@@ -1,18 +1,30 @@
-
-import { lazy, Suspense, type ReactNode } from "react"
-import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi"
-import ListLoading from "../loader/ListLoading";
-import TableOverlayLoading from "../loader/TableOverlayLoading";
-import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { lazy, Suspense, useState, type ReactNode } from "react"
+import { useGetContactListQuery } from "@/redux/features/contact/contactApi"
+import ListLoading from "../loader/ListLoading"
+import TableOverlayLoading from "../loader/TableOverlayLoading"
+import useDebounce from "@/hooks/useDebounce"
+import ListHeader from "../common/ListHeader"
+import { useNavigate } from "react-router-dom"
+import { Button } from "../ui/button"
 
 const ProductTable = lazy(() => import("./ProductTable"));
 
-
 const ProductList = () => {
-  const { data, isLoading, isFetching, isError } = useGetCategoriesQuery(undefined);
-  const categories = data?.data || [];
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(3);
+  const { searchTerm } = useDebounce({searchQuery, setCurrentPage})
+  const { data, isLoading, isFetching, isError } = useGetContactListQuery([
+    { name: "page", value: currentPage},
+    { name: "limit", value: pageSize },
+    { name: "searchTerm", value: searchTerm }
+  ]);
+
+  
+
+  const contacts = data?.data || [];
+  const meta = data?.meta || {};
  
   let content:ReactNode;
 
@@ -22,7 +34,7 @@ const ProductList = () => {
 
   if(!isLoading && !isError){
     content = <Suspense fallback={<ListLoading/>}>
-      <ProductTable categories={categories} />
+      <ProductTable contacts={contacts} meta={meta} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}/>
     </Suspense>
   }
 
@@ -30,26 +42,14 @@ const ProductList = () => {
     content = <h1 className="text-red-500">Something Went Wrong</h1>
   }
 
+
   return (
     <div className="w-full mx-auto relative">
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div className="flex justify-between items-center gap-3 w-full sm:w-auto">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Product List</h1>
-          <div className="flex items-center">
-            <span className="text-sm sm:text-base text-gray-600">Total:</span>
-            <span className="ml-2 px-3 py-1 bg-blue-100 text-blue-800 font-semibold rounded-full text-sm">
-              {categories?.length || 0}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-          <Button onClick={() => navigate("/add-product")} className="bg-cyan-600 w-full sm:w-auto hover:bg-cyan-700 text-white">
-            Add Product
-          </Button>
-        </div>
-      </div>
+      <ListHeader title="Product List" total={meta?.total} searchQuery={searchQuery} setSearchQuery={setSearchQuery}>
+        <Button onClick={() => navigate("/add-product")} className="bg-cyan-600 w-full sm:w-auto hover:bg-cyan-700 text-white">
+          Add Product
+        </Button>
+      </ListHeader>
       <div className="relative">
         {content}
         {!isLoading && isFetching && <TableOverlayLoading />}
