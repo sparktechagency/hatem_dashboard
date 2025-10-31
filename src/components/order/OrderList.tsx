@@ -82,7 +82,7 @@ const OrderList = () => {
                                 <TableRow className="hover:bg-yellow-50">
                                     <TableHead className="w-16 bg-yellow-50">S.N.</TableHead>
                                     <TableHead className="min-w-32 bg-yellow-50">Order No.</TableHead>
-                                    <TableHead className="min-w-32 bg-yellow-50">Student/Company Name</TableHead>
+                                    <TableHead className="min-w-32 bg-yellow-50">Customer Name</TableHead>
                                     <TableHead className="min-w-32 bg-yellow-50">Date</TableHead>
                                     <TableHead className="min-w-32 bg-yellow-50">Amount</TableHead>
                                     <TableHead className="min-w-32 bg-yellow-50">Invoice</TableHead>

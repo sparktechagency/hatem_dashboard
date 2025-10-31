@@ -27,3 +27,20 @@ export type IBrand = {
   _id: string;
   name: string;
 }
+
+export interface ICardBrand {
+  brandId: string
+  brandImage: string
+  brandName: string
+  modelId: string
+  modelName: string
+  generationId: string
+  generationName: string
+  productionStart: string 
+  productionEnd: string   
+  engineId: string
+  engineCode: string
+  hp: number
+  kw: number
+  ccm: number
+}

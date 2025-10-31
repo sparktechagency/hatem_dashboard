@@ -4,9 +4,6 @@ import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import LoginPage from "@/pages/auth/LoginPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
 import VerifyotpPage from "@/pages/auth/VerifyOtpPage";
-import CoursesPage from "@/pages/course/CoursesPage";
-import CreateCoursePage from "@/pages/course/CreateCoursePage";
-import UpdateCoursePage from "@/pages/course/UpdateCoursePage";
 import CategoryPage from "@/pages/dashboard/CategoryPage";
 import ContactPage from "@/pages/dashboard/ContactPage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
@@ -49,18 +46,6 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <OrdersPage />,
-      },
-      {
-        path: "courses",
-        element: <CoursesPage />,
-      },
-      {
-        path: "add-course",
-        element: <CreateCoursePage />,
-      },
-      {
-        path: "update-course/:id",
-        element: <UpdateCoursePage />,
       },
       {
         path: "categories",

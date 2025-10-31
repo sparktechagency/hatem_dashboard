@@ -1,18 +1,18 @@
-
 import { lazy, Suspense, type ReactNode } from "react"
-import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi"
 import ListLoading from "../loader/ListLoading";
 import TableOverlayLoading from "../loader/TableOverlayLoading";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import { useGetBrandsQuery } from "@/redux/features/brand/brandApi";
 
 const CarBrandTable = lazy(() => import("./CarBrandTable"));
 
 
 const CarBrandList = () => {
-  const { data, isLoading, isFetching, isError } = useGetCategoriesQuery(undefined);
-  const categories = data?.data || [];
   const navigate = useNavigate();
+  const { data, isLoading, isFetching, isError } = useGetBrandsQuery(undefined);
+  const brands = data?.data || [];
+
  
   let content:ReactNode;
 
@@ -22,7 +22,7 @@ const CarBrandList = () => {
 
   if(!isLoading && !isError){
     content = <Suspense fallback={<ListLoading/>}>
-      <CarBrandTable categories={categories} />
+      <CarBrandTable brands={brands} />
     </Suspense>
   }
 
@@ -39,7 +39,7 @@ const CarBrandList = () => {
           <div className="flex items-center">
             <span className="text-sm sm:text-base text-gray-600">Total:</span>
             <span className="ml-2 px-3 py-1 bg-blue-100 text-blue-800 font-semibold rounded-full text-sm">
-              {categories?.length || 0}
+              {brands?.length || 0}
             </span>
           </div>
         </div>
@@ -50,7 +50,7 @@ const CarBrandList = () => {
           </Button>
         </div>
       </div>
-      <div className="relative">
+      <div className="relative h-[700px] overflow-y-auto">
         {content}
         {!isLoading && isFetching && <TableOverlayLoading />}
       </div>

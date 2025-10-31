@@ -20,7 +20,7 @@ export const brandApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/brand/get-brands",
+          url: "/car-brands",
           method: "GET",
           params: params,
         };
