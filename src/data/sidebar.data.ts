@@ -1,5 +1,5 @@
 import type { IMenuItem } from "@/types/global.type";
-import { BadgeQuestionMark, BookImage, ChartBarStacked, Fingerprint, GlobeLock, HandHelping, Handshake, LayoutDashboard, Lock, MailCheck, MailQuestionMark, SettingsIcon, User, Users } from "lucide-react";
+import { BadgeQuestionMark, BookImage, ChartBarStacked, Fingerprint, GlobeLock, HandHelping, Handshake, LayoutDashboard, Lock, MailCheck, MailQuestionMark, SettingsIcon, ShoppingBasket, User, Users } from "lucide-react";
 import { MdContactPhone } from "react-icons/md";
 import { SiBrandfolder } from "react-icons/si";
 
@@ -9,7 +9,7 @@ export const menuItems: IMenuItem[] = [
   { name: 'Users', icon: Users, href: '/users' },
   { name: 'Category', icon: ChartBarStacked , href: '/categories' },
   { name: 'Car Brands', icon: SiBrandfolder , href: '/car-brands' },
-  { name: 'Products', icon: SiBrandfolder , href: '/products' },
+  { name: 'Products', icon: ShoppingBasket, href: '/products' },
   { name: 'Contact List', icon: MdContactPhone , href: '/contacts' },
   { name: 'Subscriber List', icon: MailCheck , href: '/subscribers' },
   {

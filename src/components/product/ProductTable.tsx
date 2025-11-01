@@ -1,12 +1,11 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import type { IContact } from "@/types/contact.type"
-import ViewContactModal from "../modal/contact/ViewContactModal"
 import CustomPagination from "../form/CustomPagination"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import type { IMeta } from "@/types/global.type"
+import type { IProduct } from "@/types/product.type"
 
 type TProps = {
-    contacts: IContact[],
+    products: IProduct[],
     meta: IMeta,
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -14,7 +13,7 @@ type TProps = {
     setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
 
-const ProductTable = ({ contacts, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TProps) => {
+const ProductTable = ({ products, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TProps) => {
 
   return (
     <>
@@ -26,23 +25,27 @@ const ProductTable = ({ contacts, meta, currentPage, setCurrentPage, pageSize, s
               <TableHeader className="sticky top-0 z-10 bg-yellow-50 border-b">
                 <TableRow className="hover:bg-yellow-50">
                   <TableHead className="w-16 bg-yellow-50">S.N.</TableHead>
-                  <TableHead className="min-w-48 bg-yellow-50">Email</TableHead>
-                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Message</TableHead>
+                  <TableHead className="min-w-48 bg-yellow-50">Name</TableHead>
+                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Price ($) </TableHead>
+                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Stock </TableHead>
                   <TableHead className="min-w-24 bg-yellow-50">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {contacts?.length > 0 ? (
-                  contacts?.map((contact, index) => (
+                {products?.length > 0 ? (
+                  products?.map((product, index) => (
                     <TableRow key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-muted/30"}>
                       <TableCell className="w-16 text-muted-foreground">{Number(index + 1) + (meta?.page - 1) * pageSize}</TableCell>
-                      <TableCell className="min-w-48 text-muted-foreground">{contact.userEmail}</TableCell>
+                      <TableCell className="min-w-48 text-muted-foreground">{product?.productName}</TableCell>
                       <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
-                        {contact?.message || "-"}
+                        {(product.price).toFixed(2)}
+                      </TableCell>
+                      <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
+                        {(product?.stock)}
                       </TableCell>
                       <TableCell className="min-w-24">
                         <div className="flex gap-2">
-                          <ViewContactModal contact={contact} />
+                          {/* <ViewContactModal contact={product} /> */}
                           {/* {contact?.replyText ? (
                             <button className="bg-blue-300 hover:bg-blue-400 p-2 text-white rounded-full cursor-not-allowed">
                               <Reply size={18} />

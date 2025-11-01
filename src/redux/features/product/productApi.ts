@@ -17,7 +17,7 @@ export const productApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/products",
+          url: "/products/my-products",
           method: "GET",
           params: params,
         };
