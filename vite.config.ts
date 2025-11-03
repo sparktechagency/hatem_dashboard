@@ -17,4 +17,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  preview: {
+    allowedHosts: ['dashboard.machmakers.co.uk', '13.62.189.94', "www.dashboard.machmakers.co.uk"],
+  },
 })

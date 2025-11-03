@@ -5,7 +5,7 @@ import { ErrorToast } from "../../../helper/ValidationHelper.ts";
 import TagTypes from "@/constant/tagType.constant.ts";
 
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = "http://13.62.189.94:7080/ap/v1";
 
 
 const baseQuery = fetchBaseQuery({
