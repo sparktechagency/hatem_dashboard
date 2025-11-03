@@ -48,7 +48,7 @@ const OrderList = () => {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 {/* Left Section: Title + Total Count */}
                 <div className="flex justify-between items-center gap-3 w-full sm:w-auto">
-                    <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Order List</h1>
+                    <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Order List--</h1>
                     <div className="flex items-center">
                         <span className="text-sm sm:text-base text-gray-600">Total:</span>
                         <span className="ml-2 px-3 py-1 bg-blue-100 text-blue-800 font-semibold rounded-full text-sm">
