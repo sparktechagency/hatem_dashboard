@@ -1,8 +1,10 @@
+export type TOrderStatus = 'PENDING' | 'PROCESSING' | 'DELIVERED' | 'CANCELLED';
+
 export interface IOrder {
   orderId: string;
   userId: string;
   totalAmount: number;
-  status: "PENDING" | "CONFIRMED" | "CANCELLED" | string;
+  status: TOrderStatus;
   paymentStatus: "CASH" | "PAID" | "UNPAID" | string;
   notes: string | null;
   invoice: TInvoice;

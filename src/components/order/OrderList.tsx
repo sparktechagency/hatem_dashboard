@@ -4,18 +4,21 @@ import TableOverlayLoading from "../loader/TableOverlayLoading"
 import useDebounce from "@/hooks/useDebounce"
 import ListHeader from "../common/ListHeader"
 import { useGetOrdersQuery } from "@/redux/features/order/orderApi"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 const OrderTable = lazy(() => import("./OrderTable"));
 
 const OrderList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(1);
+  const [status, setStatus] = useState("")
+  const [pageSize, setPageSize] = useState(10);
   const { searchTerm } = useDebounce({searchQuery, setCurrentPage}) //debounce handled
-  const { data, isLoading, isFetching, isError } = useGetOrdersQuery([
+  const { data, isLoading, isFetching, isError, refetch } = useGetOrdersQuery([
     { name: "page", value: currentPage},
     { name: "limit", value: pageSize },
-    { name: "searchTerm", value: searchTerm }
+    { name: "searchTerm", value: searchTerm },
+    { name: "status", value: status ==="all" ? "" : status },
   ]);
 
   
@@ -42,7 +45,38 @@ const OrderList = () => {
   return (
     <div className="w-full mx-auto relative">
       {/* Header Part */}
-       <ListHeader title="Order List" total={meta?.total} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+       <ListHeader 
+          title="Order List" 
+          total={meta?.total} 
+          onRefresh={refetch} 
+          searchQuery={searchQuery} 
+          setSearchQuery={setSearchQuery} 
+          isLoading={isLoading} 
+          isFetching={isFetching}
+          leftField={
+            <>
+              <Select
+                value={status} onValueChange={(val) => {
+                  setStatus(val)
+                  setCurrentPage(1)
+                }}
+              >
+                <SelectTrigger className="w-full sm:w-[180px]">
+                  <SelectValue placeholder="Filter by Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="PENDING">Pending</SelectItem>
+                    <SelectItem value="PROCESSING">Processing</SelectItem>
+                    <SelectItem value="DELIVERED">Delivered</SelectItem>
+                    <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </>
+          }
+       />
        
        {/* table part */}
       <div className="relative">

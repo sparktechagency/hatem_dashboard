@@ -202,3 +202,10 @@ export const recentOrderData = [
     "paymentStatus": "Pending"
   },
 ]
+
+export const orderStatusOptions = [
+  { "value": "PENDING", "label": "Pending" },
+  { "value": "PROCESSING", "label": "Processing" },
+  { "value": "DELIVERED", "label": "Delivered" },
+  { "value": "CANCELLED", "label": "Cancelled" }
+]

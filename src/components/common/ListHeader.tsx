@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import type React from "react";
 
@@ -8,9 +8,13 @@ type TProps = {
     searchQuery?: string;
     setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
     children?: React.ReactNode;
+    onRefresh?: () => void;
+    isFetching?: boolean;
+    isLoading?: boolean;
+    leftField?: React.ReactNode;
 }
 
-const ListHeader = ({ total, title, searchQuery, setSearchQuery, children }: TProps) => {
+const ListHeader = ({ total, title, searchQuery, setSearchQuery, children, onRefresh, isFetching, isLoading, leftField }: TProps) => {
 
     return (
         <>
@@ -26,6 +30,11 @@ const ListHeader = ({ total, title, searchQuery, setSearchQuery, children }: TPr
                 </div>
                 
                 <div className="flex items-center flex-col sm:flex-row gap-4">
+                    {
+                        leftField && (
+                            <> {leftField} </>
+                        )
+                    }
                     {setSearchQuery && (
                         <>
                             <div className="relative w-full sm:w-80">
@@ -40,6 +49,17 @@ const ListHeader = ({ total, title, searchQuery, setSearchQuery, children }: TPr
                         </>
                     )}
                     {children}
+                    {onRefresh && (
+                        <button
+                            onClick={onRefresh}
+                            disabled={isFetching}
+                            className={`w-full sm:w-auto px-4 cursor-pointer py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2`}
+                            title="Refresh orders"
+                        >
+                            <RefreshCw className={`h-4 w-4 sm:h-6 sm:w-6 ${!isLoading && isFetching && 'animate-spin'}`} />
+                            <span className="sm:hidden">Refresh</span>
+                        </button>
+                    )}
                 </div>
             </div>
         </>
