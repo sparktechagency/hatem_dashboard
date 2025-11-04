@@ -18,7 +18,7 @@ export const orderApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/order/get-all-orders",
+          url: "/orders/current-orders",
           method: "GET",
           params: params,
         };
