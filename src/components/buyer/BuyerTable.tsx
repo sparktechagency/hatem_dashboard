@@ -29,6 +29,7 @@ const BuyerTable = ({ buyers, meta, currentPage, setCurrentPage, pageSize, setPa
                   <TableHead className="min-w-48 bg-yellow-50">Buyer Name</TableHead>
                   <TableHead className="min-w-48 bg-yellow-50">Buyer Email</TableHead>
                   <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Contact Number</TableHead>
+                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Address</TableHead>
                   <TableHead className="min-w-24 bg-yellow-50">Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -43,6 +44,9 @@ const BuyerTable = ({ buyers, meta, currentPage, setCurrentPage, pageSize, setPa
                       </TableCell>
                       <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
                         {buyer?.phoneNumber || "-"}
+                      </TableCell>
+                      <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
+                        {buyer?.address || "-"}
                       </TableCell>
                       <TableCell className="min-w-24">
                         <ChangeStatusModal status={buyer?.status} userId={buyer?.id} key={Math.random()}/>

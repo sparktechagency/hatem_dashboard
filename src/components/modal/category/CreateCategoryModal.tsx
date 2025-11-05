@@ -17,6 +17,7 @@ import { NotebookText } from "lucide-react";
 import ErrorAlert from "@/components/validation/ErrorAlert";
 import FormButton from "@/components/form/FormButton";
 import { useEffect, useState } from "react";
+import CustomImageUpload from "@/components/form/CustomImageField";
 
 type TCategoryFormValues = z.infer<typeof categorySchema>;
 
@@ -39,7 +40,10 @@ const CreateCategoryModal = () => {
 
   const onSubmit: SubmitHandler<TCategoryFormValues> = (data) => {
     dispatch(SetCategoryCreateError(""))
-    createCategory(data)
+    const formData = new FormData();
+    formData.append("bodyData", JSON.stringify({ name: data.name }))
+    formData.append("categoryImage", data.categoryImage);
+    createCategory(formData)
   }
 
   return (
@@ -57,6 +61,12 @@ const CreateCategoryModal = () => {
           {CategoryCreateError && <ErrorAlert message={CategoryCreateError} />}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <CustomIconInput control={control} name="name" label="Name" placeholder="Enter name" icon={NotebookText} />
+            <CustomImageUpload
+              label="Upload Image"
+              name="categoryImage"
+              control={control}
+              placeholder="Click or drag image here"
+            />
             <FormButton isLoading={isLoading} loadingTitle="Adding...">Add</FormButton>
           </form>
         </DialogContent>

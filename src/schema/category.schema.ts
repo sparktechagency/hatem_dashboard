@@ -16,6 +16,16 @@ export const categorySchema = z.object({
     .regex(/^[^~!@#$%\^*\+\?><=;:"]*$/, {
       message: 'Name cannot contain special characters: ~ ! @ # $ % ^ * + ? > < = ; : "',
     }),
+  categoryImage: z
+    .instanceof(File, {message: "Please select an image"})
+    .refine((file) => file.size <= 5 * 1024 * 1024, {
+      message: "Image size must be 5MB or less",
+    })
+    .refine(
+      (file) =>
+        ["image/jpeg", "image/png", "image/webp", "image/jpg"].includes(file.type),
+      { message: "Only .jpg, .jpeg, .png, or .webp formats are allowed" }
+    )
 });
 
 
