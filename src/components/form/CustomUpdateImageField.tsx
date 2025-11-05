@@ -5,8 +5,7 @@ import { useState } from "react"
 import { Controller } from "react-hook-form"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Upload, Trash2 } from "lucide-react"
-import assets from "@/assets/assets"
+import { Upload, Edit, Trash2 } from "lucide-react"
 
 type TProps = {
   label: string;
@@ -16,19 +15,23 @@ type TProps = {
   disabled?: boolean;
   accept?: string;
   defaultPreviewUrl?:string;
+  previewUrl: string | null;
+  setPreviewUrl: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const CustomImageUpload = ({
+const CustomUpdateImageField = ({
   label,
   name,
   control,
   placeholder = "Click or drag to upload image",
   disabled = false,
   accept = "image/jpeg,image/png,image/webp,image/jpg",
-  defaultPreviewUrl=""
+  defaultPreviewUrl="",
+  previewUrl,
+  setPreviewUrl,
 }: TProps) => {
 
-  const [previewUrl, setPreviewUrl] = useState<string | null>(defaultPreviewUrl || assets.placeholder_img || null);
+  const [previewFile, setPreviewFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = (file: File | null, onChange: (value: File | null) => void) => {
@@ -38,7 +41,8 @@ const CustomImageUpload = ({
         setPreviewUrl(e.target?.result as string)
       }
       reader.readAsDataURL(file)
-      onChange(file)
+      onChange(file);
+      setPreviewFile(file)
     }
   }
 
@@ -81,17 +85,34 @@ const CustomImageUpload = ({
                 <div className="relative h-48 w-full">
                   <img src={previewUrl || "/placeholder.svg"} alt="Preview" className="h-full w-full" />
                 </div>
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => handleDelete(onChange)}
-                  disabled={disabled}
-                  className="absolute top-2 right-2"
-                >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  Delete
-                </Button>
+                    {!previewFile ? (
+                        <Button
+                            type="button"
+                            variant="default"
+                            size="sm"
+                            onClick={() => handleDelete(onChange)}
+                            disabled={disabled}
+                            className="absolute top-2 right-2"
+                        >
+                            <Edit className="h-4 w-4" />
+                            Change
+                        </Button>
+                     ) :
+                        <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => {
+                                    setPreviewUrl(defaultPreviewUrl);
+                                    setPreviewFile(null)
+                                }}
+                                disabled={disabled}
+                                className="absolute top-2 right-2"
+                            >
+                                <Trash2 className="h-4 w-4" />
+                                Discard
+                        </Button>
+                    }
               </div>
             )}
 
@@ -118,6 +139,18 @@ const CustomImageUpload = ({
                   <p className="text-sm font-medium text-foreground">{placeholder}</p>
                   <p className="text-xs text-muted-foreground">JPG, PNG, or WebP up to 5MB</p>
                 </div>
+
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => setPreviewUrl(defaultPreviewUrl)}
+                    disabled={disabled}
+                    className="absolute top-2 right-2"
+                  >
+                   <Trash2 className="h-4 w-4" />
+                    Discard
+                  </Button>
               </div>
             )}
             {/* Error Message */}
@@ -129,4 +162,4 @@ const CustomImageUpload = ({
   )
 }
 
-export default CustomImageUpload
+export default CustomUpdateImageField

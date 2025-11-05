@@ -1,5 +1,3 @@
-"use client"
-
 import { Eye } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"

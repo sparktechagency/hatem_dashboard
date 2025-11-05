@@ -1,5 +1,3 @@
-"use client"
-
 import { AlertTriangle, RefreshCw, Home, ArrowLeft } from "lucide-react"
 import { useLocation, useNavigate } from "react-router-dom"
 

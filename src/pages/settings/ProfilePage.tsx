@@ -1,5 +1,3 @@
-"use client";
-
 import ProfileForm from "@/components/profile/ProfileForm";
 import ProfilePic from "@/components/profile/ProfilePic";
 import { useState } from "react";

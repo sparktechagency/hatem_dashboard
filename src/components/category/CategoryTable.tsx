@@ -21,6 +21,7 @@ const CategoryTable = ({ categories }: TCategoryTableProps) => {
                 <TableRow className="hover:bg-yellow-50">
                   <TableHead className="w-16 bg-yellow-50">S.N.</TableHead>
                   <TableHead className="min-w-32 bg-yellow-50">Name</TableHead>
+                  <TableHead className="min-w-32 bg-yellow-50">Image</TableHead>
                   <TableHead className="min-w-24 bg-yellow-50">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -30,6 +31,9 @@ const CategoryTable = ({ categories }: TCategoryTableProps) => {
                     <TableRow key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-muted/30"}>
                       <TableCell className="w-16 text-muted-foreground">{index + 1}</TableCell>
                       <TableCell className="min-w-32 font-medium text-foreground">{category?.name}</TableCell>
+                      <TableCell className="min-w-32 font-medium text-foreground">
+                        <img src={category?.iconUrl} alt="category_img" className="h-[45px] w-[45px] rounded" />
+                      </TableCell>
                       <TableCell className="min-w-24">
                         <div className="flex items-center gap-2">
                           <UpdateCategoryModal category={category} key={Math.random()}/>

@@ -31,7 +31,7 @@ const CarBrandTable = ({ brands }: TCarBrandTableProps) => {
                       <TableCell className="w-16 text-muted-foreground">{index + 1}</TableCell>
                       <TableCell className="min-w-32 font-medium text-foreground">{brand?.brandName}</TableCell>
                       <TableCell className="min-w-32 font-medium text-foreground">
-                        <img src={brand?.brandImage} alt="brandImg" className="h-[45px] w-[45px]" />
+                        <img src={brand?.brandImage} alt="brandImg" className="h-[45px] w-[45px] rounded" />
                       </TableCell>
                       <TableCell className="min-w-24">
                         <div className="flex items-center gap-2">
