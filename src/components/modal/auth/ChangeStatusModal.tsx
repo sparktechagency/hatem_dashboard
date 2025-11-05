@@ -73,7 +73,7 @@ const ChangeStatusModal = ({ userId, status }: TProps) => {
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()} showCloseButton={false}>
           <DialogHeader>
-            <DialogTitle>Are you sure, you want to delete?</DialogTitle>
+            <DialogTitle>Are you sure, you want to {status === "ACTIVE" ? "block" : "active"}?</DialogTitle>
           </DialogHeader>
 
           <div className="flex justify-end gap-2">
