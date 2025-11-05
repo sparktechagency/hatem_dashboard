@@ -5,8 +5,8 @@ import { ErrorToast } from "../../../helper/ValidationHelper.ts";
 import TagTypes from "@/constant/tagType.constant.ts";
 
 
-const baseUrl = "http://13.62.189.94:7080/api/v1";
-//const baseUrl = "https://fit-parts-ecommerce-for-vehicle-par.vercel.app/api/v1";
+// const baseUrl = "http://13.62.189.94:7080/api/v1";
+const baseUrl = "https://fit-parts-ecommerce-for-vehicle-par.vercel.app/api/v1";
 
 
 const baseQuery = fetchBaseQuery({
