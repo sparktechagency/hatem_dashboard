@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { useCreateCategoryMutation } from "@/redux/features/category/categoryApi";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { categorySchema } from "@/schema/category.schema";
+import { createCategorySchema } from "@/schema/category.schema";
 import type z from "zod";
 import { SetCategoryCreateError } from "@/redux/features/category/categorySlice";
 import { NotebookText } from "lucide-react";
@@ -19,7 +19,7 @@ import FormButton from "@/components/form/FormButton";
 import { useEffect, useState } from "react";
 import CustomImageUpload from "@/components/form/CustomImageField";
 
-type TCategoryFormValues = z.infer<typeof categorySchema>;
+type TCategoryFormValues = z.infer<typeof createCategorySchema>;
 
 const CreateCategoryModal = () => {
   const [open, setOpen] = useState(false)
@@ -27,7 +27,7 @@ const CreateCategoryModal = () => {
   const { CategoryCreateError } = useAppSelector((state) => state.category)
   const [createCategory, { isLoading, isSuccess }] = useCreateCategoryMutation();
   const { handleSubmit, control, reset } = useForm({
-    resolver: zodResolver(categorySchema)
+    resolver: zodResolver(createCategorySchema)
   });
 
 

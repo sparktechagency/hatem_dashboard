@@ -4,7 +4,7 @@ import { getEmail } from "@/helper/SessionHelper"
 
 const VerifyotpPage = () => {
   const handleResend = () => {
-    console.log("Resending verification code...")
+    //console.log("Resending verification code...")
     // Handle resend logic here
   }
 
