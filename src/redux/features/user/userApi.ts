@@ -8,7 +8,7 @@ import { SetUser } from "./userSlice";
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query({
+    getBuyers: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args !== undefined && args.length > 0) {
@@ -19,13 +19,13 @@ export const userApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/user/get-users",
+          url: "/admin/users",
           method: "GET",
           params: params,
         };
       },
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.users],
+      providesTags: [TagTypes.buyers],
     }),
     getMe: builder.query({
       query: () => ({
@@ -82,4 +82,4 @@ export const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useGetMeQuery, useUpdateProfileMutation } = userApi;
+export const { useGetBuyersQuery, useGetMeQuery, useUpdateProfileMutation } = userApi;

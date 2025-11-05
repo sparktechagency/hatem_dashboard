@@ -2,11 +2,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import CustomPagination from "../form/CustomPagination"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import type { IMeta } from "@/types/global.type"
-import type { IOrder } from "@/types/order.type"
-import ChangeOrderStatusModal from "../modal/order/ChangeOrderStatusModal"
+import type { IBuyer } from "@/types/user.type"
+import ChangeStatusModal from "../modal/auth/ChangeStatusModal"
 
 type TProps = {
-    orders: IOrder[],
+    buyers: IBuyer[],
     meta: IMeta,
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -14,7 +14,7 @@ type TProps = {
     setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
 
-const OrderTable = ({ orders, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TProps) => {
+const BuyerTable = ({ buyers, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TProps) => {
 
   return (
     <>
@@ -28,37 +28,31 @@ const OrderTable = ({ orders, meta, currentPage, setCurrentPage, pageSize, setPa
                   <TableHead className="w-16 bg-yellow-50">S.N.</TableHead>
                   <TableHead className="min-w-48 bg-yellow-50">Buyer Name</TableHead>
                   <TableHead className="min-w-48 bg-yellow-50">Buyer Email</TableHead>
-                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Amount</TableHead>
+                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Contact Number</TableHead>
                   <TableHead className="min-w-24 bg-yellow-50">Status</TableHead>
-                  <TableHead className="min-w-24 bg-yellow-50">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {orders?.length > 0 ? (
-                  orders?.map((order, index) => (
+                {buyers?.length > 0 ? (
+                  buyers?.map((buyer, index) => (
                     <TableRow key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-muted/30"}>
                       <TableCell className="w-16 text-muted-foreground">{Number(index + 1) + (meta?.page - 1) * pageSize}</TableCell>
-                      <TableCell className="min-w-48 text-muted-foreground">{order?.customerName}</TableCell>
+                      <TableCell className="min-w-48 text-muted-foreground">{buyer?.fullName}</TableCell>
                       <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
-                        {order?.invoice?.["Buyer Email"] || "-"}
+                        {buyer?.email || "-"}
                       </TableCell>
                       <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
-                        {order?.totalAmount.toFixed(2)|| "-"}
+                        {buyer?.phoneNumber || "-"}
                       </TableCell>
                       <TableCell className="min-w-24">
-                        <ChangeOrderStatusModal status={order?.status} orderId={order?.orderId} key={Math.random()}/>
-                      </TableCell>
-                      <TableCell className="min-w-24">
-                        <div className="flex gap-2">
-                          {/* <ViewContactModal contact={order} /> */}
-                        </div>
+                        <ChangeStatusModal status={buyer?.status} userId={buyer?.id} key={Math.random()}/>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
                     <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                      No orders found
+                      No buyers found
                     </TableCell>
                   </TableRow>
                 )}
@@ -95,4 +89,4 @@ const OrderTable = ({ orders, meta, currentPage, setCurrentPage, pageSize, setPa
   )
 }
 
-export default OrderTable
+export default BuyerTable

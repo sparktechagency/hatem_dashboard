@@ -6,7 +6,7 @@ import { SiBrandfolder } from "react-icons/si";
 export const menuItems: IMenuItem[] = [
   { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
   { name: 'Orders', icon: BookImage, href: '/orders' },
-  { name: 'Users', icon: Users, href: '/users' },
+  { name: 'Buyers', icon: Users, href: '/buyers' },
   { name: 'Category', icon: ChartBarStacked , href: '/categories' },
   { name: 'Car Brands', icon: SiBrandfolder , href: '/car-brands' },
   { name: 'Products', icon: ShoppingBasket, href: '/products' },

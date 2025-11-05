@@ -27,3 +27,13 @@ export type IUserDataSource = {
   status: string;
 }
 
+
+export type IBuyer = {
+  id: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  status: 'ACTIVE' | 'INACTIVE';
+  address: string;
+};
+

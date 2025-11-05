@@ -8,7 +8,6 @@ import CategoryPage from "@/pages/dashboard/CategoryPage";
 import ContactPage from "@/pages/dashboard/ContactPage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
 import SubscriberPage from "@/pages/dashboard/SubscriberPage";
-import UsersPage from "@/pages/dashboard/UsersPage";
 import FaqsPage from "@/pages/help/FaqsPage";
 import HelpPage from "@/pages/help/HelpPage";
 import OrdersPage from "@/pages/order/OrdersPage";
@@ -24,6 +23,7 @@ import CarBrandPage from "@/pages/CardBrand/CarBrandPage";
 import CreateBrandPage from "@/pages/CardBrand/CreateBrandPage";
 import ProductsPage from "@/pages/product/ProductsPage";
 import CreateProductPage from "@/pages/product/CreateProductPage";
+import BuyerPage from "@/pages/user/BuyerPage";
 
 
 const router = createBrowserRouter([
@@ -40,12 +40,12 @@ const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: "users",
-        element: <UsersPage />,
-      },
-      {
         path: "orders",
         element: <OrdersPage />,
+      },
+      {
+        path: "buyers",
+        element: <BuyerPage />,
       },
       {
         path: "categories",

@@ -159,14 +159,13 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
     changeStatus: builder.mutation({
-      query: ({id, data}) => ({
-        url: `/auth/change-status/${id}`,
+      query: (id) => ({
+        url: `/admin/users/${id}`,
         method: "PATCH",
-        body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.users, TagTypes.admins];
+          return [TagTypes.buyers, TagTypes.admins];
         }
         return [];
       },
