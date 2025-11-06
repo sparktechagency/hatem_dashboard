@@ -6,7 +6,6 @@ import { Controller } from "react-hook-form"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Upload, Trash2 } from "lucide-react"
-import assets from "@/assets/assets"
 
 type TProps = {
   label: string;
@@ -28,7 +27,7 @@ const CustomImageUpload = ({
   defaultPreviewUrl=""
 }: TProps) => {
 
-  const [previewUrl, setPreviewUrl] = useState<string | null>(defaultPreviewUrl || assets.placeholder_img || null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(defaultPreviewUrl || null);
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = (file: File | null, onChange: (value: File | null) => void) => {
