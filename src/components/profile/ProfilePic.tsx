@@ -1,13 +1,13 @@
 import { FaCamera } from "react-icons/fa";
-import profile_placeholder from "../../assets/images/profile_placeholder.png";
 import { useRef, useState } from "react";
+import assets from "@/assets/assets";
 
 type TProps = {
   setFile: React.Dispatch<React.SetStateAction<null | File>>;
 };
 
 const ProfilePic = ({ setFile }: TProps) => {
-  const [imageSrc, setImageSrc] = useState(profile_placeholder); // Default image
+  const [imageSrc, setImageSrc] = useState(assets.profile_placeholder_img); // Default image
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ const ProfilePic = ({ setFile }: TProps) => {
         <img
           src={imageSrc}
           alt="Profile"
-          onError={() => setImageSrc(profile_placeholder)}
+          onError={() => setImageSrc(assets.profile_placeholder_img)}
           className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
         />
         <div

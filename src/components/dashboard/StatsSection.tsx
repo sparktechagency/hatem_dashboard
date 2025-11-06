@@ -1,6 +1,5 @@
-import money from "../../assets/images/dashboard/money.png";
-import user from "../../assets/images/dashboard/user.png";
-import course from "../../assets/images/dashboard/course.png";
+import assets from "@/assets/assets";
+
 
 const StatsSection = () => {
   //const { data, isLoading, isError } = useGetStatsQuery(undefined);
@@ -76,7 +75,7 @@ const StatsSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-white rounded-lg shadow-sm p-6 flex items-center">
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                <img src={user} alt="job" className="w-6 h-6" />
+                <img src={assets.user_img} alt="job" className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-800">{stats?.totalUsers}</p>
@@ -85,7 +84,7 @@ const StatsSection = () => {
             </div>
             <div className="bg-white rounded-lg shadow-sm p-6 flex items-center">
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                <img src={course} alt="job" className="w-6 h-6" />
+                <img src={assets.seller_img} alt="job" className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-800">{stats?.totalCourses}</p>
@@ -94,7 +93,7 @@ const StatsSection = () => {
             </div>
             <div className="bg-white rounded-lg shadow-sm p-6 flex items-center">
               <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mr-4">
-                <img src={money} alt="money" className="w-6 h-6" />
+                <img src={assets.money_img} alt="money" className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-800">${stats?.totalIncome}</p>

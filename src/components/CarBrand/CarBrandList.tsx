@@ -13,7 +13,10 @@ const CarBrandList = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { data, isLoading, isFetching, isError } = useGetBrandsQuery(undefined);
+  const { data, isLoading, isFetching, isError } = useGetBrandsQuery([
+    { name: "page", value: currentPage },
+    { name: "limit", value: pageSize },
+  ]);
   const brands = data?.data || [];
   const meta = data?.meta || {};
 

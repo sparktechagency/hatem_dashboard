@@ -4,6 +4,7 @@ import {
   setEmail,
   setOtpToken,
   setToken,
+  setUserDetails,
 } from "../../../helper/SessionHelper.ts";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper.ts";
 import { apiSlice } from "../api/apiSlice.ts";
@@ -31,6 +32,11 @@ export const authApi = apiSlice.injectEndpoints({
           if (role === "ADMIN" || role === "SUPER_ADMIN") {
             localStorage.clear();
             setToken(token);
+            setUserDetails({
+              name: res?.data?.data?.name as string,
+              email: res?.data?.data?.email as string,
+              image: res?.data?.data?.image as string
+            })
             SuccessToast("Login Success");
             setTimeout(() => {
               window.location.href = "/";

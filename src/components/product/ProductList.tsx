@@ -13,7 +13,7 @@ const ProductList = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const { searchTerm } = useDebounce({searchQuery, setCurrentPage})
   const { data, isLoading, isFetching, isError } = useGetProductsQuery([
     { name: "page", value: currentPage},

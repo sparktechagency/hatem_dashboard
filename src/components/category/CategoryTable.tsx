@@ -1,15 +1,24 @@
 import type { ICategory } from "@/types/category.type"
 import DeleteCategoryModal from "../modal/category/DeleteCategoryModal"
 import UpdateCategoryModal from "../modal/category/UpdateCategoryModal"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import CustomPagination from "../form/CustomPagination";
+import type { IMeta } from "@/types/global.type";
+
 
 
 type TCategoryTableProps = {
-    categories: ICategory[]
+  categories: ICategory[];
+  meta: IMeta,
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
 
 
-const CategoryTable = ({ categories }: TCategoryTableProps) => {
+const CategoryTable = ({ categories, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TCategoryTableProps) => {
   return (
     <>
       <div className="border border-border rounded-lg bg-card overflow-hidden">
@@ -54,6 +63,30 @@ const CategoryTable = ({ categories }: TCategoryTableProps) => {
           </div>
         </div>
       </div> 
+      <div className="fixed bottom-0 flex left-0 w-full bg-white border-t py-3">
+        <CustomPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={meta?.totalPages} dataLength={categories?.length} />
+        {meta?.total > 50 && (
+          <div className="flex flex-1 justify-end">
+            <Select value={pageSize.toString()} aria-label="Results per page" onValueChange={(val) => {
+              setCurrentPage(1)
+              setPageSize(Number(val));
+            }}>
+              <SelectTrigger
+                id="results-per-page"
+                className="w-fit whitespace-nowrap"
+              >
+                <SelectValue placeholder="Select number of results" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10 / page</SelectItem>
+                <SelectItem value="20">20 / page</SelectItem>
+                <SelectItem value="50">50 / page</SelectItem>
+                <SelectItem value="100">100 / page</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+      </div>
     </>
   )
 }

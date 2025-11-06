@@ -63,7 +63,7 @@ const CarBrandTable = ({ brands, meta, currentPage, setCurrentPage, pageSize, se
         </div>
       </div> 
        <div className="fixed bottom-0 flex left-0 w-full bg-white border-t py-3">
-        <CustomPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={meta?.totalPages} />
+        <CustomPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={meta?.totalPages} dataLength={brands?.length}/>
         {meta?.total > 50 && (
           <div className="flex flex-1 justify-end">
             <Select value={pageSize.toString()} aria-label="Results per page" onValueChange={(val) => {
