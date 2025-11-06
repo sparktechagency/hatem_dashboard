@@ -6,7 +6,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
     getStats: builder.query({
       query: () => {
         return {
-          url: `/user/get-stats`,
+          url: `/admin/dashboard-stats`,
           method: "GET",
         };
       },
