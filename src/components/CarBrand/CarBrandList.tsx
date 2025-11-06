@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactNode } from "react"
+import { lazy, Suspense, useState, type ReactNode } from "react"
 import ListLoading from "../loader/ListLoading";
 import TableOverlayLoading from "../loader/TableOverlayLoading";
 import { Button } from "../ui/button";
@@ -11,8 +11,11 @@ const CarBrandTable = lazy(() => import("./CarBrandTable"));
 
 const CarBrandList = () => {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const { data, isLoading, isFetching, isError } = useGetBrandsQuery(undefined);
   const brands = data?.data || [];
+  const meta = data?.meta || {};
 
  
   let content:ReactNode;
@@ -23,7 +26,7 @@ const CarBrandList = () => {
 
   if(!isLoading && !isError){
     content = <Suspense fallback={<ListLoading/>}>
-      <CarBrandTable brands={brands} />
+      <CarBrandTable brands={brands} meta={meta} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}/>
     </Suspense>
   }
 

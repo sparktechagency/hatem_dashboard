@@ -32,7 +32,7 @@ const CategoryTable = ({ categories }: TCategoryTableProps) => {
                       <TableCell className="w-16 text-muted-foreground">{index + 1}</TableCell>
                       <TableCell className="min-w-32 font-medium text-foreground">{category?.name}</TableCell>
                       <TableCell className="min-w-32 font-medium text-foreground">
-                        <img src={category?.iconUrl} alt="category_img" className="h-[45px] w-[45px] rounded" />
+                        <img src={category?.iconUrl} alt="category_img" className="h-[40px] w-[45px] rounded" />
                       </TableCell>
                       <TableCell className="min-w-24">
                         <div className="flex items-center gap-2">

@@ -4,6 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import type { IMeta } from "@/types/global.type"
 import type { IOrder } from "@/types/order.type"
 import ChangeOrderStatusModal from "../modal/order/ChangeOrderStatusModal"
+import ViewOrderModal from "../modal/order/ViewOrderModal"
 
 type TProps = {
     orders: IOrder[],
@@ -26,9 +27,9 @@ const OrderTable = ({ orders, meta, currentPage, setCurrentPage, pageSize, setPa
               <TableHeader className="sticky top-0 z-10 bg-yellow-50 border-b">
                 <TableRow className="hover:bg-yellow-50">
                   <TableHead className="w-16 bg-yellow-50">S.N.</TableHead>
-                  <TableHead className="min-w-48 bg-yellow-50">Buyer Name</TableHead>
-                  <TableHead className="min-w-48 bg-yellow-50">Buyer Email</TableHead>
-                  <TableHead className="min-w-32 hidden sm:table-cell bg-yellow-50">Amount</TableHead>
+                  <TableHead className="min-w-48 bg-yellow-50">Customer Name</TableHead>
+                  <TableHead className="min-w-48 bg-yellow-50">Email</TableHead>
+                  <TableHead className="min-w-32 bg-yellow-50">Amount</TableHead>
                   <TableHead className="min-w-24 bg-yellow-50">Status</TableHead>
                   <TableHead className="min-w-24 bg-yellow-50">Action</TableHead>
                 </TableRow>
@@ -39,19 +40,17 @@ const OrderTable = ({ orders, meta, currentPage, setCurrentPage, pageSize, setPa
                     <TableRow key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-muted/30"}>
                       <TableCell className="w-16 text-muted-foreground">{Number(index + 1) + (meta?.page - 1) * pageSize}</TableCell>
                       <TableCell className="min-w-48 text-muted-foreground">{order?.customerName}</TableCell>
-                      <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
+                      <TableCell className="min-w-48 text-muted-foreground">
                         {order?.invoice?.["Buyer Email"] || "-"}
                       </TableCell>
-                      <TableCell className="min-w-32 text-muted-foreground hidden sm:table-cell truncate">
+                      <TableCell className="min-w-32 text-muted-foreground">
                         {order?.totalAmount.toFixed(2)|| "-"}
                       </TableCell>
                       <TableCell className="min-w-24">
                         <ChangeOrderStatusModal status={order?.status} orderId={order?.orderId} key={Math.random()}/>
                       </TableCell>
                       <TableCell className="min-w-24">
-                        <div className="flex gap-2">
-                          {/* <ViewContactModal contact={order} /> */}
-                        </div>
+                        <ViewOrderModal order={order}/>
                       </TableCell>
                     </TableRow>
                   ))

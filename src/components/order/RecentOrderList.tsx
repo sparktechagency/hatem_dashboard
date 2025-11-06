@@ -1,13 +1,15 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Download } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import { Button } from "../ui/button";
-import OrderDetailsModal from "../modal/order/OrderDetailsModal"
 import { recentOrderData } from "@/data/order.data"
+import { useNavigate } from "react-router-dom";
 
 
 
 
 const RecentOrderList = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="w-full mx-auto relative bg-white p-4 rounded-md mt-4 shadow">
             {/* Header Section */}
@@ -60,14 +62,20 @@ const RecentOrderList = () => {
                                                 <button className={`px-3 py-1.5 border w-20 rounded-xl ${order?.paymentStatus==="Paid" ? "border-green-200 text-green-500" : "border-red-200 text-red-500"}`}>{order?.paymentStatus}</button>
                                             </TableCell>
                                             <TableCell className="min-w-24">
-                                               <OrderDetailsModal/>
+                                                <Button
+                                                    onClick={() => navigate("/order-details")}
+                                                    size="icon"
+                                                    className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-full"
+                                                >
+                                                    <Eye className="h-3 w-3" />
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     ))
                                 ) : (
                                     <TableRow>
                                         <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                                            No Orders found matching your search.
+                                            No Recent Orders found.
                                         </TableCell>
                                     </TableRow>
                                 )}
