@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -6,40 +7,9 @@ import BasicInfoForm from "./BasicInfoForm"
 import SectionManagerForm from "./SectionForm"
 import ShippingManagerForm from "./ShippingForm"
 import ReferenceForm from "./ReferenceForm"
+import type { IProductFormData } from "@/types/product.type"
 
-interface FormData {
-  brandId: string
-  categoryId: string
-  productName: string
-  description: string
-  price: number | ""
-  discount: number | ""
-  stock: number | ""
-  isVisible: boolean
-  fitVehicles: string[]
-  sections: Array<{
-    sectionName: string
-    fields: Array<{
-      fieldName: string
-      valueString?: string
-      valueFloat?: number
-    }>
-  }>
-  references: Array<{
-    type: string
-    number: string
-    brandId?: string
-  }>
-  shipping: Array<{
-    countryCode: string
-    countryName: string
-    carrier: string
-    cost: number | ""
-    deliveryMin: number | ""
-    deliveryMax: number | ""
-    isDefault?: boolean
-  }>
-}
+
 
 const MOCK_BRANDS = [
   { id: "68eb81dbf3e7ce80d2119818", name: "BMW" },
@@ -61,7 +31,8 @@ const MOCK_VEHICLES = [
 
 
 const CreateProductForm = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [year, setYear] =  useState("");
+  const [formData, setFormData] = useState<IProductFormData>({
     brandId: "",
     categoryId: "",
     productName: "",
@@ -107,21 +78,21 @@ const CreateProductForm = () => {
     }))
   }
 
-  const handleSectionsChange = (sections: FormData["sections"]) => {
+  const handleSectionsChange = (sections: IProductFormData["sections"]) => {
     setFormData((prev) => ({
       ...prev,
       sections,
     }))
   }
 
-  const handleReferencesChange = (references: FormData["references"]) => {
+  const handleReferencesChange = (references: IProductFormData["references"]) => {
     setFormData((prev) => ({
       ...prev,
       references,
     }))
   }
 
-  const handleShippingChange = (shipping: FormData["shipping"]) => {
+  const handleShippingChange = (shipping: IProductFormData["shipping"]) => {
     setFormData((prev) => ({
       ...prev,
       shipping,
@@ -146,6 +117,8 @@ const CreateProductForm = () => {
         vehicles={MOCK_VEHICLES}
         onBasicInfoChange={handleBasicInfoChange}
         onFitVehiclesChange={handleFitVehiclesChange}
+        year={year}
+        setYear={setYear}
       />
 
       {/* Sections Manager */}

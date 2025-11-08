@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { IBrand } from "@/types/carBrand.type";
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetBrandOptions, SetBrandUpdateError } from "./brandSlice";
+import { SetBrandUpdateError } from "./brandSlice";
 
 export const brandApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -28,26 +27,21 @@ export const brandApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.brands],
     }),
-    getBrandDropDown: builder.query({
-      query: (typeId) => ({
-        url: `/brand/get-brand-drop-down/${typeId}`,
+    getBrandDropDownByYear: builder.query({
+      query: (year) => ({
+        url: `/car-brands/brands/${year}`,
         method: "GET",
       }),
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.brandDropDown],
-      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-        try {
-          const res = await queryFulfilled;
-          const data = res?.data?.data;
-          const options = data?.map((b: IBrand) => ({
-            value: b._id,
-            label: b.name,
-          }))
-          dispatch(SetBrandOptions(options))
-        } catch {
-          ErrorToast("Something Went Wrong");
-        }
-      },
+    }),
+    getModelDropDownByBrandId: builder.query({
+      query: (brandId) => ({
+        url: `/car-brands/models/${brandId}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.modelDropDown]
     }),
     createBrand: builder.mutation({
       query: (data) => ({
@@ -135,4 +129,4 @@ export const brandApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetBrandsQuery, useGetBrandDropDownQuery, useCreateBrandMutation, useDeleteBrandMutation, useUpdateBrandMutation } = brandApi;
+export const { useGetBrandsQuery, useGetBrandDropDownByYearQuery, useGetModelDropDownByBrandIdQuery, useCreateBrandMutation, useDeleteBrandMutation, useUpdateBrandMutation } = brandApi;

@@ -3,14 +3,23 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import type React from "react"
+import { getYearOptions } from "@/data/options.data"
+import { useEffect, useState } from "react"
+import { useGetBrandDropDownByYearQuery, useGetModelDropDownByBrandIdQuery } from "@/redux/features/brand/brandApi"
+import type { ICardBrand } from "@/types/carBrand.type"
+import type { TOption } from "@/types/global.type"
+import type { IProductFormData } from "@/types/product.type"
 
 interface BasicInfoSectionProps {
-  formData: any
+  formData: IProductFormData
   brands: Array<{ id: string; name: string }>
   categories: Array<{ id: string; name: string }>
   vehicles: Array<{ id: string; name: string }>
   onBasicInfoChange: (field: string, value: any) => void
-  onFitVehiclesChange: (vehicleId: string) => void
+  onFitVehiclesChange: (vehicleId: string) => void;
+  year: string;
+  setYear: React.Dispatch<React.SetStateAction<string>>
 }
 
 const BasicInfoForm = ({
@@ -20,7 +29,33 @@ const BasicInfoForm = ({
   vehicles,
   onBasicInfoChange,
   onFitVehiclesChange,
+  year,
+  setYear
 }: BasicInfoSectionProps) =>{
+
+  const yearOptions = getYearOptions();
+  const [brandOptions, setBrandOptions] = useState([]);
+  const [modelOptions, setModelOptions] = useState([]);
+
+  const { data: brandData, isLoading: brandLoading } = useGetBrandDropDownByYearQuery(year, {
+    skip: !year
+  });
+
+  const { data: modelData, isLoading: modelLoading } = useGetModelDropDownByBrandIdQuery(formData.br, {
+    skip: !year
+  });
+
+  useEffect(() => {
+    if (brandData?.data) {
+      setBrandOptions(brandData?.data?.map((cv: ICardBrand) => ({
+        value: cv?.brandId,
+        label: cv?.brandName
+      })))
+    }
+  }, [brandData])
+
+ 
+
   return (
     <Card>
       <CardHeader>
@@ -28,18 +63,39 @@ const BasicInfoForm = ({
         <CardDescription>Enter the basic product details</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Brand and Category */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Year */}
+          <div className="space-y-2">
+            <Label htmlFor="brand">Year *</Label>
+            <Select 
+              value={year} 
+              onValueChange={(value) => {
+                setYear(value);
+                onBasicInfoChange("brandId", "");
+              }}
+            >
+              <SelectTrigger id="brand">
+                <SelectValue placeholder="Select a year" />
+              </SelectTrigger>
+              <SelectContent>
+                {yearOptions.map((year, index) => (
+                  <SelectItem key={index} value={year}>
+                    {year}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <div className="space-y-2">
             <Label htmlFor="brand">Brand *</Label>
-            <Select value={formData.brandId} onValueChange={(value) => onBasicInfoChange("brandId", value)}>
+            <Select value={formData.brandId} onValueChange={(value) => onBasicInfoChange("brandId", value)} disabled={brandLoading || brandOptions?.length===0} >
               <SelectTrigger id="brand">
                 <SelectValue placeholder="Select a brand" />
               </SelectTrigger>
               <SelectContent>
-                {brands.map((brand) => (
-                  <SelectItem key={brand.id} value={brand.id}>
-                    {brand.name}
+                {brandOptions.map((brand:TOption, index) => (
+                  <SelectItem key={index} value={brand.value}>
+                    {brand.label}
                   </SelectItem>
                 ))}
               </SelectContent>
