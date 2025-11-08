@@ -17,21 +17,9 @@ const MOCK_BRANDS = [
   { id: "3", name: "Audi" },
 ]
 
-const MOCK_CATEGORIES = [
-  { id: "68eb78992f6abbc2fd9f1932", name: "Bumpers" },
-  { id: "2", name: "Lights" },
-  { id: "3", name: "Mirrors" },
-]
-
-const MOCK_VEHICLES = [
-  { id: "68ec9d7e5d5df4fdb737e5a5", name: "BMW 320i 2016-2020" },
-  { id: "2", name: "BMW 330i 2016-2020" },
-  { id: "3", name: "BMW M Sport 2016-2020" },
-]
 
 
 const CreateProductForm = () => {
-  const [year, setYear] =  useState("");
   const [formData, setFormData] = useState<IProductFormData>({
     brandId: "",
     categoryId: "",
@@ -112,13 +100,8 @@ const CreateProductForm = () => {
       {/* Basic Information */}
       <BasicInfoForm
         formData={formData}
-        brands={MOCK_BRANDS}
-        categories={MOCK_CATEGORIES}
-        vehicles={MOCK_VEHICLES}
         onBasicInfoChange={handleBasicInfoChange}
         onFitVehiclesChange={handleFitVehiclesChange}
-        year={year}
-        setYear={setYear}
       />
 
       {/* Sections Manager */}

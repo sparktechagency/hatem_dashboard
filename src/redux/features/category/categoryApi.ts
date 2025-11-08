@@ -27,6 +27,19 @@ export const categoryApi = apiSlice.injectEndpoints({
       },
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.categories],
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+        try {
+          const res = await queryFulfilled;
+          const data = res?.data?.data;
+          const options = data?.map((c: ICategory) => ({
+            value: c.id,
+            label: c.name,
+          }))
+          dispatch(SetCategoryOptions(options))
+        } catch {
+          ErrorToast("Something Went Wrong");
+        }
+      }
     }),
     getCategoryDropDown: builder.query({
       query: () => ({

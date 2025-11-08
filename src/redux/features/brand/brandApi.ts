@@ -36,12 +36,20 @@ export const brandApi = apiSlice.injectEndpoints({
       providesTags: [TagTypes.brandDropDown],
     }),
     getModelDropDownByBrandId: builder.query({
-      query: (brandId) => ({
-        url: `/car-brands/models/${brandId}`,
+      query: ({ brandId, year}) => ({
+        url: `/car-brands/models/${brandId}/${year}`,
         method: "GET",
       }),
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.modelDropDown]
+    }),
+    getVehicleDropDown: builder.query({
+      query: (modelId) => ({
+        url: `/car-brands/engines/${modelId}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.vehicleDropDown]
     }),
     createBrand: builder.mutation({
       query: (data) => ({
@@ -129,4 +137,4 @@ export const brandApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetBrandsQuery, useGetBrandDropDownByYearQuery, useGetModelDropDownByBrandIdQuery, useCreateBrandMutation, useDeleteBrandMutation, useUpdateBrandMutation } = brandApi;
+export const { useGetBrandsQuery, useGetBrandDropDownByYearQuery, useGetModelDropDownByBrandIdQuery, useGetVehicleDropDownQuery, useCreateBrandMutation, useDeleteBrandMutation, useUpdateBrandMutation } = brandApi;

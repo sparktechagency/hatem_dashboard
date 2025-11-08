@@ -29,6 +29,7 @@ const TagTypes = {
     brands: "Brands",
     brandDropDown: "BrandDropDown",
     modelDropDown: "ModelDropDown",
+    vehicleDropDown: "VehicleDropDown"
 }
 
 export default TagTypes;
