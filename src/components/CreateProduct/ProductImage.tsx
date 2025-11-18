@@ -5,14 +5,9 @@ import { X, Plus } from "lucide-react";
 type TProps = {
    selectedFile: File | null;
    setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
-   label?: string;
 };
 
-const UploadSingleImage = ({
-   selectedFile,
-   setSelectedFile,
-   label,
-}: TProps) => {
+const ProductImage = ({ selectedFile, setSelectedFile }: TProps) => {
    const fileInputRef = useRef<HTMLInputElement>(null);
 
    const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +31,7 @@ const UploadSingleImage = ({
 
    return (
       <div className="max-w-xl">
-         <h2 className="text-md font-semibold text-slate-700 mb-2">
-            {label || "Upload Brand Image"}
-         </h2>
+         <h2 className="text-xl font-bold mb-4">Upload Image</h2>
 
          {/* Hidden file input */}
          <input
@@ -52,18 +45,20 @@ const UploadSingleImage = ({
          {/* Image previews */}
          {!selectedFile ? (
             <>
-               {/* trigger */}
-               <div
+               {/* Upload button */}
+               <button
                   onClick={triggerFileInput}
-                  className="border-2 cursor-pointer border-dashed border-gray-300 rounded-lg p-6 text-center"
+                  type="button"
+                  disabled={selectedFile ? true : false}
+                  className={`mb-6 px-6 py-2 rounded-lg transition-colors flex items-center gap-2 ${
+                     selectedFile
+                        ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                        : "bg-cyan-600 text-white hover:bg-cyan-700"
+                  }`}
                >
-                  <div className="text-gray-400 mb-4">
-                     <Plus className="w-12 h-10 mx-auto mb-2" />
-                     <p className="text-lg">
-                        Click "Add Image" to upload files
-                     </p>
-                  </div>
-               </div>
+                  <Plus className="w-5 h-5" />
+                  Upload Product Image
+               </button>
             </>
          ) : (
             <>
@@ -79,7 +74,7 @@ const UploadSingleImage = ({
                      {/* Remove button */}
                      <button
                         onClick={removeFile}
-                        className="absolute top-2 cursor-pointer right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
                      >
                         <X className="w-4 h-4" />
                      </button>
@@ -91,4 +86,4 @@ const UploadSingleImage = ({
    );
 };
 
-export default UploadSingleImage;
+export default ProductImage;

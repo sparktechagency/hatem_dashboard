@@ -48,8 +48,8 @@ const BasicInfoForm = ({
    brandLoading,
 }: BasicInfoSectionProps) => {
    const yearOptions = getYearOptions();
-   const [modelId, setModelId] = useState("");
-   const [modelOptions, setModelOptions] = useState([]);
+
+   const [modelOptions, setModelOptions] = useState<TOption[]>([]);
    const [vehicleOptions, setVehicleOptions] = useState<TEngine[]>([]);
    const { categoryOptions } = useAppSelector((state) => state.category);
 
@@ -69,27 +69,65 @@ const BasicInfoForm = ({
 
    useEffect(() => {
       if (modelData?.data) {
-         setModelOptions(
-            modelData?.data?.map((cv: IModelOption) => ({
-               value: cv?.modelId,
-               label: cv?.modelName,
-            }))
-         );
+         const models = modelData.data.map((cv: IModelOption) => ({
+            value: cv?.modelId,
+            label: cv?.modelName,
+         }));
+         console.log("🚗 Models loaded:", models.length);
+         setModelOptions(models);
       }
    }, [modelData]);
-   /* modelDropDown part ended*/
 
    /* vehicleDropDown part */
-   const { data: vehicleData } = useGetVehicleDropDownQuery(modelId, {
-      skip: !modelId,
+   const { data: vehicleData } = useGetVehicleDropDownQuery(formData.modelId, {
+      skip: !formData.modelId,
    });
 
    useEffect(() => {
       if (vehicleData?.data) {
+         console.log("🚙 Vehicles loaded:", vehicleData.data.length);
          setVehicleOptions(vehicleData.data);
       }
    }, [vehicleData]);
-   /* vehicleDropDown part ended*/
+
+   const handleBrandChange = (value: string) => {
+      console.log("🏢 Brand changed to:", value);
+      onBasicInfoChange("brandId", value);
+      // Clear model and vehicles when brand changes
+      onBasicInfoChange("modelId", "");
+      onBasicInfoChange("fitVehicles", []);
+      setModelOptions([]);
+      setVehicleOptions([]);
+   };
+
+   const handleModelChange = (value: string) => {
+      console.log("🚗 Model changed to:", value);
+      onBasicInfoChange("modelId", value);
+      // Clear vehicles when model changes
+      onBasicInfoChange("fitVehicles", []);
+      setVehicleOptions([]);
+   };
+
+   // Debug logs
+   useEffect(() => {
+      console.log("📊 Form State:", {
+         year,
+         brandId: formData.brandId,
+         modelId: formData.modelId,
+         categoryId: formData.categoryId,
+         brandOptionsCount: brandOptions.length,
+         modelOptionsCount: modelOptions.length,
+         categoryOptionsCount: categoryOptions.length,
+      });
+   }, [
+      year,
+      formData.brandId,
+      formData.modelId,
+      formData.categoryId,
+      brandOptions,
+      modelOptions,
+      categoryOptions,
+   ]);
 
    return (
       <Card>
@@ -102,22 +140,14 @@ const BasicInfoForm = ({
                {/* Year */}
                <div className="space-y-2">
                   <Label htmlFor="year">Year *</Label>
-                  <Select
-                     value={year}
-                     onValueChange={(value) => {
-                        onYearChange(value);
-                        onBasicInfoChange("brandId", "");
-                        setModelOptions([]);
-                        setModelId("");
-                     }}
-                  >
+                  <Select value={year} onValueChange={onYearChange}>
                      <SelectTrigger id="year">
                         <SelectValue placeholder="Select a year" />
                      </SelectTrigger>
                      <SelectContent>
-                        {yearOptions.map((year, index) => (
-                           <SelectItem key={index} value={year}>
-                              {year}
+                        {yearOptions.map((yearOption, index) => (
+                           <SelectItem key={index} value={yearOption}>
+                              {yearOption}
                            </SelectItem>
                         ))}
                      </SelectContent>
@@ -129,21 +159,26 @@ const BasicInfoForm = ({
                   <Label htmlFor="brand">Brand *</Label>
                   <Select
                      value={formData.brandId}
-                     onValueChange={(value) => {
-                        onBasicInfoChange("brandId", value);
-                        setModelId("");
-                     }}
-                     disabled={brandLoading || brandOptions?.length === 0}
+                     onValueChange={handleBrandChange}
+                     disabled={brandLoading || !year}
                   >
                      <SelectTrigger id="brand">
                         <SelectValue placeholder="Select a brand" />
                      </SelectTrigger>
                      <SelectContent>
-                        {brandOptions.map((brand: TOption, index) => (
-                           <SelectItem key={index} value={brand.value}>
-                              {brand.label}
+                        {brandOptions.length > 0 ? (
+                           brandOptions.map((brand: TOption, index) => (
+                              <SelectItem key={index} value={brand.value}>
+                                 {brand.label}
+                              </SelectItem>
+                           ))
+                        ) : (
+                           <SelectItem value="no-options" disabled>
+                              {brandLoading
+                                 ? "Loading..."
+                                 : "No brands available"}
                            </SelectItem>
-                        ))}
+                        )}
                      </SelectContent>
                   </Select>
                </div>
@@ -152,23 +187,32 @@ const BasicInfoForm = ({
                <div className="space-y-2">
                   <Label htmlFor="model">Model *</Label>
                   <Select
-                     value={modelId}
-                     onValueChange={(value) => setModelId(value)}
-                     disabled={modelLoading || modelOptions?.length === 0}
+                     value={formData.modelId}
+                     onValueChange={handleModelChange}
+                     disabled={modelLoading || !formData.brandId}
                   >
                      <SelectTrigger id="model">
                         <SelectValue placeholder="Select a model" />
                      </SelectTrigger>
                      <SelectContent>
-                        {modelOptions.map((model: TOption, index) => (
-                           <SelectItem key={index} value={model.value}>
-                              {model.label}
+                        {modelOptions.length > 0 ? (
+                           modelOptions.map((model: TOption, index) => (
+                              <SelectItem key={index} value={model.value}>
+                                 {model.label}
+                              </SelectItem>
+                           ))
+                        ) : (
+                           <SelectItem value="no-options" disabled>
+                              {modelLoading
+                                 ? "Loading..."
+                                 : "No models available"}
                            </SelectItem>
-                        ))}
+                        )}
                      </SelectContent>
                   </Select>
                </div>
 
+               {/* Category */}
                <div className="space-y-2">
                   <Label htmlFor="category">Category *</Label>
                   <Select
@@ -182,11 +226,17 @@ const BasicInfoForm = ({
                         <SelectValue placeholder="Select a category" />
                      </SelectTrigger>
                      <SelectContent>
-                        {categoryOptions.map((category: TOption, index) => (
-                           <SelectItem key={index} value={category.value}>
-                              {category.label}
+                        {categoryOptions.length > 0 ? (
+                           categoryOptions.map((category: TOption, index) => (
+                              <SelectItem key={index} value={category.value}>
+                                 {category.label}
+                              </SelectItem>
+                           ))
+                        ) : (
+                           <SelectItem value="no-options" disabled>
+                              No categories available
                            </SelectItem>
-                        ))}
+                        )}
                      </SelectContent>
                   </Select>
                </div>
@@ -229,7 +279,6 @@ const BasicInfoForm = ({
                      type="number"
                      placeholder="299.99"
                      step="0.01"
-                     max={100}
                      value={formData.price}
                      onChange={(e) =>
                         onBasicInfoChange(
@@ -281,6 +330,7 @@ const BasicInfoForm = ({
                   />
                </div>
             </div>
+
             {/* Fit Vehicles */}
             {vehicleOptions?.length > 0 && (
                <div className="space-y-3">

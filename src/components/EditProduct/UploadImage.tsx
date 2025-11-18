@@ -1,17 +1,19 @@
 import type React from "react";
 import { useRef } from "react";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Pencil } from "lucide-react"; // Import Pencil icon
 
 type TProps = {
    selectedFile: File | null;
    setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
    label?: string;
+   initialImage?: string;
 };
 
 const UploadSingleImage = ({
    selectedFile,
    setSelectedFile,
    label,
+   initialImage,
 }: TProps) => {
    const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -34,6 +36,10 @@ const UploadSingleImage = ({
       return URL.createObjectURL(file);
    };
 
+   const imageUrl = selectedFile
+      ? getImageUrl(selectedFile)
+      : initialImage || "/placeholder.svg";
+
    return (
       <div className="max-w-xl">
          <h2 className="text-md font-semibold text-slate-700 mb-2">
@@ -50,7 +56,7 @@ const UploadSingleImage = ({
          />
 
          {/* Image previews */}
-         {!selectedFile ? (
+         {imageUrl === "/placeholder.svg" ? (
             <>
                {/* trigger */}
                <div
@@ -71,18 +77,26 @@ const UploadSingleImage = ({
                   <div className="relative group">
                      <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
                         <img
-                           src={getImageUrl(selectedFile) || "/placeholder.svg"}
+                           src={imageUrl}
                            alt={`Preview`}
                            className="w-full h-full object-cover"
                         />
                      </div>
-                     {/* Remove button */}
-                     <button
-                        onClick={removeFile}
-                        className="absolute top-2 cursor-pointer right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
-                     >
-                        <X className="w-4 h-4" />
-                     </button>
+                     {/* Remove and Edit buttons */}
+                     <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                           onClick={triggerFileInput} // Trigger file input for edit
+                           className="bg-blue-500 text-white rounded-full p-1 cursor-pointer hover:bg-blue-600"
+                        >
+                           <Pencil className="w-4 h-4" />
+                        </button>
+                        <button
+                           onClick={removeFile}
+                           className="bg-red-500 text-white rounded-full p-1 cursor-pointer hover:bg-red-600"
+                        >
+                           <X className="w-4 h-4" />
+                        </button>
+                     </div>
                   </div>
                </div>
             </>

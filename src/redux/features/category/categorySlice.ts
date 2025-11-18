@@ -1,9 +1,10 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { TOption } from "@/types/global.type";
 
 type TInitialState = {
   CategoryCreateError: string;
   CategoryUpdateError: string,
-  categoryOptions: []
+  categoryOptions: TOption[]
 }
 
 const initialState: TInitialState = {

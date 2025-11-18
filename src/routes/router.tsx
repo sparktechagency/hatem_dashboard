@@ -24,122 +24,126 @@ import CreateBrandPage from "@/pages/CardBrand/CreateBrandPage";
 import ProductsPage from "@/pages/product/ProductsPage";
 import CreateProductPage from "@/pages/product/CreateProductPage";
 import BuyerPage from "@/pages/user/BuyerPage";
-
+import EditProductPage from "@/pages/product/EditProductPage";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-       <PrivateRoute>
-         <DashboardLayout />
-       </PrivateRoute>
-    ),
-    children: [
-      {
-        index: true,
-        element: <DashboardPage />,
-      },
-      {
-        path: "orders",
-        element: <OrdersPage />,
-      },
-      {
-        path: "buyers",
-        element: <BuyerPage />,
-      },
-      {
-        path: "categories",
-        element: <CategoryPage />,
-      },
-      {
-        path: "car-brands",
-        element: <CarBrandPage />,
-      },
-      {
-        path: "add-brand",
-        element: <CreateBrandPage />,
-      },
-      {
-        path: "products",
-        element: <ProductsPage />,
-      },
-      {
-        path: "add-product",
-        element: <CreateProductPage />,
-      },
-      {
-        path: "profile",
-        element: <ProfilePage />,
-      },
-      {
-        path: "about-us",
-        element: <AboutPage />,
-      },
-      {
-        path: "privacy-policy",
-        element: <PrivacyPage />,
-      },
-      {
-        path: "terms-condition",
-        element: <TermsPage />,
-      },
-      {
-        path: "help",
-        element: <HelpPage />,
-      },
-      {
-        path: "faqs",
-        element: <FaqsPage />,
-      },
-      {
-        path: "contacts",
-        element: <ContactPage />,
-      },
-      {
-        path: "subscribers",
-        element: <SubscriberPage />,
-      },
-      {
-        path: "change-password",
-        element: <ChangePasswordPage />,
-      },
-    ],
-  },
-  {
-    path: "/auth",
-    element: (
-      <PublicRoute>
-       <AuthLayout />
-      </PublicRoute>
-    ),
-    children: [
-      {
-        index: true,
-        element: <Navigate to="/auth/signin" replace />,
-      },
-      {
-        path: "signin",
-        element: <LoginPage />,
-      },
-      {
-        path: "forgot-password",
-        element: <ForgotPasswordPage />,
-      },
-      {
-        path: "verify-otp",
-        element: <VerifyotpPage />,
-      },
-      {
-        path: "reset-password",
-        element: <ResetPasswordPage />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <h1>This is Not Found Page</h1>
-    // element: <NotFoundRoute/>,
-  },
+   {
+      path: "/",
+      element: (
+         <PrivateRoute>
+            <DashboardLayout />
+         </PrivateRoute>
+      ),
+      children: [
+         {
+            index: true,
+            element: <DashboardPage />,
+         },
+         {
+            path: "orders",
+            element: <OrdersPage />,
+         },
+         {
+            path: "buyers",
+            element: <BuyerPage />,
+         },
+         {
+            path: "categories",
+            element: <CategoryPage />,
+         },
+         {
+            path: "car-brands",
+            element: <CarBrandPage />,
+         },
+         {
+            path: "add-brand",
+            element: <CreateBrandPage />,
+         },
+         {
+            path: "products",
+            element: <ProductsPage />,
+         },
+         {
+            path: "add-product",
+            element: <CreateProductPage />,
+         },
+         {
+            path: "edit-product/:id",
+            element: <EditProductPage />,
+         },
+         {
+            path: "profile",
+            element: <ProfilePage />,
+         },
+         {
+            path: "about-us",
+            element: <AboutPage />,
+         },
+         {
+            path: "privacy-policy",
+            element: <PrivacyPage />,
+         },
+         {
+            path: "terms-condition",
+            element: <TermsPage />,
+         },
+         {
+            path: "help",
+            element: <HelpPage />,
+         },
+         {
+            path: "faqs",
+            element: <FaqsPage />,
+         },
+         {
+            path: "contacts",
+            element: <ContactPage />,
+         },
+         {
+            path: "subscribers",
+            element: <SubscriberPage />,
+         },
+         {
+            path: "change-password",
+            element: <ChangePasswordPage />,
+         },
+      ],
+   },
+   {
+      path: "/auth",
+      element: (
+         <PublicRoute>
+            <AuthLayout />
+         </PublicRoute>
+      ),
+      children: [
+         {
+            index: true,
+            element: <Navigate to="/auth/signin" replace />,
+         },
+         {
+            path: "signin",
+            element: <LoginPage />,
+         },
+         {
+            path: "forgot-password",
+            element: <ForgotPasswordPage />,
+         },
+         {
+            path: "verify-otp",
+            element: <VerifyotpPage />,
+         },
+         {
+            path: "reset-password",
+            element: <ResetPasswordPage />,
+         },
+      ],
+   },
+   {
+      path: "*",
+      element: <h1>This is Not Found Page</h1>,
+      // element: <NotFoundRoute/>,
+   },
 ]);
 
 export default router;

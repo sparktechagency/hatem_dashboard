@@ -15,6 +15,7 @@ export interface IProduct {
 
 export interface IProductFormData {
   brandId: string
+  modelId?: string
   categoryId: string
   productName: string
   description: string
