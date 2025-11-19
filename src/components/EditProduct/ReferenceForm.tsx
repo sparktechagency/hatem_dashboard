@@ -18,10 +18,10 @@ import {
 import { Plus, Trash2 } from "lucide-react";
 import { useEffect } from "react";
 
-interface Reference {
+export interface Reference {
    type: string;
    number: string;
-   brandId?: string;
+   brandId: string;
 }
 
 interface ReferencesManagerProps {
@@ -39,57 +39,56 @@ const ReferenceForm = ({
 
    // Debug log
    useEffect(() => {
-      console.log("📋 References state:", {
-         referencesCount: references.length,
+      console.log("📋 ReferenceForm Render:", {
+         referencesCount: references?.length,
          brandsCount: brands.length,
-         references: references.map((r) => ({
+         brands: brands,
+         references: references?.map((r, idx) => ({
+            index: idx,
             type: r.type,
             number: r.number,
             brandId: r.brandId,
+            brandExists: brands.some((b) => b.id === r.brandId),
+            matchingBrand: brands.find((b) => b.id === r.brandId),
          })),
       });
    }, [references, brands]);
 
    const isReferenceComplete = (reference: Reference): boolean => {
-      return reference.type.trim() !== "" && reference.number.trim() !== "";
+      return (
+         reference.type.trim() !== "" &&
+         reference.number.trim() !== "" &&
+         reference.brandId.trim() !== ""
+      );
    };
 
    const canAddReference = (): boolean => {
-      if (references.length === 0) return true;
-      return isReferenceComplete(references[references.length - 1]);
+      if (references?.length === 0) return true;
+      return isReferenceComplete(references?.[references?.length - 1]);
    };
 
    const addReference = () => {
-      onReferencesChange([
-         ...references,
-         {
-            type: "OE",
-            number: "",
-            brandId: undefined,
-         },
-      ]);
+      const newReference = {
+         type: "",
+         number: "",
+         brandId: "",
+      };
+      console.log("➕ Adding new reference:", newReference);
+      onReferencesChange([...references, newReference]);
    };
 
    const removeReference = (index: number) => {
+      console.log("🗑️ Removing reference at index:", index);
       onReferencesChange(references.filter((_, i) => i !== index));
    };
 
    const updateReference = (index: number, key: string, value: string) => {
       const updated = [...references];
-
-      // Handle brand clearing - convert "none" back to undefined
-      if (key === "brandId" && value === "none") {
-         updated[index] = {
-            ...updated[index],
-            [key]: undefined,
-         };
-      } else {
-         updated[index] = {
-            ...updated[index],
-            [key]: value,
-         };
-      }
-
+      updated[index] = {
+         ...updated[index],
+         [key]: value,
+      };
+      console.log(`✏️ Updated reference ${index} ${key}:`, value);
       onReferencesChange(updated);
    };
 
@@ -164,10 +163,15 @@ const ReferenceForm = ({
 
                         <div className="space-y-2">
                            <Label htmlFor={`ref-brand-${index}`}>
-                              Brand (Optional)
+                              Brand *
+                              {reference.brandId && (
+                                 <span className="text-xs text-muted-foreground ml-2">
+                                    (ID: {reference.brandId.substring(0, 8)}...)
+                                 </span>
+                              )}
                            </Label>
                            <Select
-                              value={reference.brandId || "none"}
+                              value={reference.brandId}
                               onValueChange={(value) =>
                                  updateReference(index, "brandId", value)
                               }
@@ -176,12 +180,6 @@ const ReferenceForm = ({
                                  <SelectValue placeholder="Select brand" />
                               </SelectTrigger>
                               <SelectContent>
-                                 {/* None option with special value */}
-                                 <SelectItem value="none">
-                                    <span className="text-muted-foreground">
-                                       None
-                                    </span>
-                                 </SelectItem>
                                  {brands.length > 0 ? (
                                     brands.map((brand) => (
                                        <SelectItem

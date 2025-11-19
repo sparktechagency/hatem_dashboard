@@ -40,12 +40,18 @@ const ProductTable = ({
    setPageSize,
 }: TProps) => {
    const navigate = useNavigate();
-   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(
-      null
-   );
+   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+   const [selectedProductId, setSelectedProductId] = useState<string>("");
 
-   const handleDeleteClick = (product: IProduct) => {
-      setSelectedProduct(product);
+   const handleDeleteClick = (productId: string) => {
+      setSelectedProductId(productId);
+      setDeleteModalOpen(true);
+   };
+
+   const handleCloseDeleteModal = () => {
+      setDeleteModalOpen(false);
+      // Clear selected product after modal animation completes
+      setTimeout(() => setSelectedProductId(""), 200);
    };
 
    return (
@@ -167,6 +173,7 @@ const ProductTable = ({
                                                 `/edit-product/${product.id}`
                                              )
                                           }
+                                          title="Edit Product"
                                        >
                                           <Pencil className="h-4 w-4" />
                                        </Button>
@@ -174,8 +181,9 @@ const ProductTable = ({
                                           size="icon"
                                           variant="destructive"
                                           onClick={() =>
-                                             handleDeleteClick(product)
+                                             handleDeleteClick(product.id)
                                           }
+                                          title="Delete Product"
                                        >
                                           <Trash2 className="h-4 w-4" />
                                        </Button>
@@ -198,6 +206,7 @@ const ProductTable = ({
                </div>
             </div>
          </div>
+
          <div className="fixed bottom-0 flex left-0 w-full bg-white border-t py-3">
             <CustomPagination
                currentPage={currentPage}
@@ -231,8 +240,13 @@ const ProductTable = ({
             )}
          </div>
 
-         {selectedProduct && (
-            <DeleteProductModal produdtId={selectedProduct.id} />
+         {/* Delete Modal - Always rendered, controlled by open state */}
+         {selectedProductId && (
+            <DeleteProductModal
+               productId={selectedProductId}
+               open={deleteModalOpen}
+               onOpenChange={handleCloseDeleteModal}
+            />
          )}
       </>
    );

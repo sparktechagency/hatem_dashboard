@@ -2,38 +2,43 @@ import { apiSlice } from "../api/apiSlice.js";
 import TagTypes from "../../../constant/tagType.constant.js";
 
 export const dashboardApi = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    getStats: builder.query({
-      query: () => {
-        return {
-          url: `/admin/dashboard-stats`,
-          method: "GET",
-        };
-      },
-      keepUnusedDataFor: 600,
-      providesTags: [TagTypes.stats],
-    }),
-    getUserGrowth: builder.query({
-      query: (year) => {
-        return {
-          url: `/user/get-user-overview/${year}`,
-          method: "GET",
-        };
-      },
-      keepUnusedDataFor: 600,
-      providesTags: [TagTypes.userGrowth],
-    }),
-    getIncomeGrowth: builder.query({
-      query: (year) => {
-        return {
-          url: `/order/get-income-overview/${year}`,
-          method: "GET",
-        };
-      },
-      keepUnusedDataFor: 600,
-      providesTags: [TagTypes.incomeGrowth],
-    }),
-  }),
+   endpoints: (builder) => ({
+      getStats: builder.query({
+         query: () => {
+            return {
+               url: `/admin/dashboard-stats`,
+               method: "GET",
+            };
+         },
+         keepUnusedDataFor: 600,
+         providesTags: [TagTypes.stats],
+      }),
+      getUserGrowth: builder.query({
+         query: (year) => {
+            return {
+               url: `/admin/dashboard-stats?usersYear=${year}`,
+               method: "GET",
+            };
+         },
+         keepUnusedDataFor: 600,
+         providesTags: [TagTypes.userGrowth],
+      }),
+      getIncomeGrowth: builder.query({
+         query: (year) => {
+            console.log("Fetching income growth for year:", year);
+            return {
+               url: `/admin/dashboard-stats?earningsYear=${year}`,
+               method: "GET",
+            };
+         },
+         keepUnusedDataFor: 600,
+         providesTags: [TagTypes.incomeGrowth],
+      }),
+   }),
 });
 
-export const { useGetStatsQuery, useGetUserGrowthQuery, useGetIncomeGrowthQuery } = dashboardApi;
+export const {
+   useGetStatsQuery,
+   useGetUserGrowthQuery,
+   useGetIncomeGrowthQuery,
+} = dashboardApi;

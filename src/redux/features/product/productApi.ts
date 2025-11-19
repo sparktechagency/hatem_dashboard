@@ -27,7 +27,7 @@ export const productApi = apiSlice.injectEndpoints({
       }),
       getProductById: builder.query<any, string>({
          query: (id) => ({
-            url: `/products/${id}`,
+            url: `/products/my-products/${id}`,
             method: "GET",
          }),
          keepUnusedDataFor: 600,
@@ -65,7 +65,7 @@ export const productApi = apiSlice.injectEndpoints({
       }),
       updateProduct: builder.mutation({
          query: ({ id, data }) => ({
-            url: `/brand/update-brand/${id}`,
+            url: `/products/${id}`,
             method: "PATCH",
             body: data,
          }),
@@ -78,7 +78,7 @@ export const productApi = apiSlice.injectEndpoints({
          async onQueryStarted(_arg, { queryFulfilled }) {
             try {
                await queryFulfilled;
-               SuccessToast("Brand is updated successfully");
+               SuccessToast("Product is updated successfully");
             } catch (err: any) {
                const status = err?.error?.status;
                const message =
@@ -93,7 +93,7 @@ export const productApi = apiSlice.injectEndpoints({
       }),
       deleteProduct: builder.mutation({
          query: (id) => ({
-            url: `/brand/delete-brand/${id}`,
+            url: `/products/${id}`,
             method: "DELETE",
          }),
          invalidatesTags: (result) => {
@@ -105,7 +105,7 @@ export const productApi = apiSlice.injectEndpoints({
          async onQueryStarted(_arg, { queryFulfilled }) {
             try {
                await queryFulfilled;
-               SuccessToast("Brand is deleted successfully");
+               SuccessToast("Product is deleted successfully");
             } catch (err: any) {
                const status = err?.error?.status;
                const message =

@@ -229,7 +229,6 @@ const BasicInfoForm = ({
                      type="number"
                      placeholder="299.99"
                      step="0.01"
-                     max={100}
                      value={formData.price}
                      onChange={(e) =>
                         onBasicInfoChange(

@@ -36,6 +36,7 @@ interface BasicInfoSectionProps {
    onYearChange: (value: string) => void;
    brandOptions: TOption[];
    brandLoading: boolean;
+   initialModelOption?: TOption | null;
 }
 
 const BasicInfoForm = ({
@@ -46,6 +47,7 @@ const BasicInfoForm = ({
    onYearChange,
    brandOptions,
    brandLoading,
+   initialModelOption,
 }: BasicInfoSectionProps) => {
    const yearOptions = getYearOptions();
 
@@ -67,16 +69,33 @@ const BasicInfoForm = ({
          }
       );
 
+   // Initialize modelOptions with initialModelOption if available
+   useEffect(() => {
+      if (initialModelOption && modelOptions.length === 0) {
+         console.log("🚗 Setting initial model option:", initialModelOption);
+         setModelOptions([initialModelOption]);
+      }
+   }, [initialModelOption]);
+
    useEffect(() => {
       if (modelData?.data) {
          const models = modelData.data.map((cv: IModelOption) => ({
             value: cv?.modelId,
             label: cv?.modelName,
          }));
-         console.log("🚗 Models loaded:", models.length);
-         setModelOptions(models);
+         console.log("🚗 Models loaded from API:", models.length);
+
+         // If we have an initial model that's not in the fetched list, keep it
+         if (
+            initialModelOption &&
+            !models.some((m: TOption) => m.value === initialModelOption.value)
+         ) {
+            setModelOptions([initialModelOption, ...models]);
+         } else {
+            setModelOptions(models);
+         }
       }
-   }, [modelData]);
+   }, [modelData, initialModelOption]);
 
    /* vehicleDropDown part */
    const { data: vehicleData } = useGetVehicleDropDownQuery(formData.modelId, {
@@ -118,6 +137,7 @@ const BasicInfoForm = ({
          brandOptionsCount: brandOptions.length,
          modelOptionsCount: modelOptions.length,
          categoryOptionsCount: categoryOptions.length,
+         currentModelOptions: modelOptions,
       });
    }, [
       year,
