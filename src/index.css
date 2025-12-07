@@ -43,7 +43,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background:  oklch(0.985 0.01 229.05);
+  --background: oklch(0.985 0.01 229.05);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -117,7 +117,40 @@
   body {
     @apply bg-background text-foreground;
   }
-
 }
 
+.jodit-wysiwyg ul,
+.jodit-wysiwyg ol {
+  padding-left: 2.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
 
+/* Base styles */
+.jodit-wysiwyg ul {
+  list-style-type: disc;
+}
+.jodit-wysiwyg ol {
+  list-style-type: decimal;
+}
+
+/* Specific Types Support (Square, Circle, Roman, Alpha) */
+.jodit-wysiwyg ul[style*="list-style-type: square"] {
+  list-style-type: square !important;
+}
+.jodit-wysiwyg ul[style*="list-style-type: circle"] {
+  list-style-type: circle !important;
+}
+.jodit-wysiwyg ol[style*="list-style-type: lower-roman"] {
+  list-style-type: lower-roman !important;
+}
+.jodit-wysiwyg ol[style*="list-style-type: upper-roman"] {
+  list-style-type: upper-roman !important;
+}
+.jodit-wysiwyg ol[style*="list-style-type: lower-alpha"] {
+  list-style-type: lower-alpha !important;
+}
+.jodit-wysiwyg ol[style*="list-style-type: upper-alpha"] {
+  list-style-type: upper-alpha !important;
+}
